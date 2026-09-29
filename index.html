@@ -7,7 +7,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>BUBU Adventure — V20</title>
+<title>BUBU Adventure — V21</title>
 
 <script src="https://cdn.jsdelivr.net/npm/phaser@3.80.1/dist/phaser.min.js"></script>
 
@@ -456,12 +456,35 @@ button{font-family:inherit}
 .v7SideBtn b{font-size:25px;line-height:26px}.v7SideBtn span{font-size:7px;max-width:46px;overflow:hidden;text-overflow:ellipsis}
 .settingsSide{background:linear-gradient(#49b9ff,#1576dc)}.giftSide{background:linear-gradient(#ff9f38,#f05a16)}.trophySide{background:linear-gradient(#83d647,#38a71e)}.shopSide{background:linear-gradient(#4aaeff,#0969ce)}
 .v7Hub{position:relative;z-index:5;width:min(100%,760px);margin:0 auto;padding:0 8px 25px 66px}
-.v7Top{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(105px,.72fr);gap:7px;align-items:stretch;min-height:470px}
-.v7HeroStage{position:relative;min-height:470px;border-radius:28px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding-top:10px;overflow:visible}
-.v7LogoWrap{text-align:center;z-index:4;transform:rotate(-1deg);margin-top:3px}
-.v7Logo{font-size:clamp(52px,14vw,104px);line-height:.78;font-weight:1000;letter-spacing:-4px;color:#ffc42d;-webkit-text-stroke:4px #1748a9;text-shadow:0 5px 0 #ea6500,0 9px 0 #fff,0 13px 0 #1752b2,0 18px 20px #07518b55}
-.v7SubLogo{margin-top:11px;font-size:clamp(23px,7vw,48px);font-weight:1000;color:#fff;-webkit-text-stroke:3px #1749ab;text-shadow:0 5px 0 #10408f;letter-spacing:-1px}
-.v7HeroArt{position:relative;width:min(100%,285px);height:292px;margin-top:-5px;z-index:3;animation:v7Bob 3s ease-in-out infinite}
+.v7Top{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(105px,.72fr);gap:9px;align-items:stretch;min-height:470px}
+.v7HeroStage{position:relative;min-height:470px;border-radius:28px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding-top:12px;overflow:visible}
+.v7LogoWrap{
+  text-align:center;z-index:4;transform:none;margin-top:4px;
+  padding:8px 18px 6px;border-radius:26px;
+  background:linear-gradient(180deg,#ffffffd8,#dff1ff9d);
+  box-shadow:0 8px 18px #0b5cb733,inset 0 2px 0 #fff;
+}
+.v7Logo{
+  font-size:clamp(54px,14vw,102px);line-height:.8;font-weight:1000;letter-spacing:-3px;
+  color:#ffcb38;-webkit-text-stroke:4px #1247aa;
+  text-shadow:0 4px 0 #f06b00,0 8px 0 #fff,0 13px 0 #1b61cc,0 16px 22px #0a4b9335;
+}
+.v7SubLogo{
+  margin-top:8px;font-size:clamp(22px,6.5vw,44px);font-weight:1000;letter-spacing:.5px;
+  color:#ffffff;-webkit-text-stroke:2.5px #1550b0;text-shadow:0 4px 0 #11408d;
+}
+.v7HeroArt{position:relative;width:min(100%,285px);height:292px;margin-top:4px;z-index:3;animation:v7Bob 3s ease-in-out infinite}
+.menuOverlayPanel{
+  position:fixed; inset:0; z-index:90;
+  display:flex; align-items:flex-start; justify-content:center;
+  padding:14px 10px 24px; overflow:auto; background:#082655a6;
+}
+.menuOverlayPanel .v7Panel, .menuOverlayPanel.v7Panel{
+  width:min(96vw,900px);
+  margin:0 auto;
+}
+.menuOverlayPanel.hidden{display:none!important}
+.v7Panel.hidden{display:none!important}
 .heroSvg{width:100%;height:100%;overflow:visible}.heroGlasses{opacity:var(--glasses-opacity,0);transition:opacity .25s}
 .heroHatBadge{position:absolute;z-index:6;top:16px;left:50%;transform:translateX(-50%);font-size:36px;filter:drop-shadow(0 3px 2px #0004);pointer-events:none}
 @keyframes v7Bob{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-5px) rotate(1deg)}}
@@ -721,6 +744,14 @@ body.game-running .attackCtrl{
   }
 }
 
+
+/* ===== V21 BOW / ARROW ===== */
+body.game-running .attackCtrl{
+  font-size:25px!important;
+  background:linear-gradient(180deg,#c47a2f,#7f451d)!important;
+  text-shadow:none!important;
+}
+
 </style>
 </head>
 <body>
@@ -754,7 +785,7 @@ body.game-running .attackCtrl{
         </div>
 
         <div class="v7HeroArt" aria-label="Bubu">
-          <img class="exactBubuImg" src="bubu.png?v=1" alt="Bubu">
+          <img class="exactBubuImg" src="bubu_source.png?v=22" alt="Bubu">
         </div>
 
         <button id="playBtn" class="v7PlayBtn"><span class="playTriangle">▶</span><span id="playLabel">PLAY</span></button>
@@ -776,7 +807,7 @@ body.game-running .attackCtrl{
       </div>
     </section>
 
-    <section id="customizePanel" class="v7Panel customizePanel">
+    <section id="customizePanel" class="v7Panel customizePanel menuOverlayPanel hidden">
       <header class="panelHeader">
         <button class="panelBack" id="customBackBtn">←</button>
         <h2 id="customizeTitle">Customize Bubu</h2>
@@ -784,7 +815,7 @@ body.game-running .attackCtrl{
       </header>
       <div class="customBody">
         <div class="customPreview">
-          <img class="exactBubuImg" src="bubu.png?v=1" alt="Bubu">
+          <img class="exactBubuImg" src="bubu_source.png?v=22" alt="Bubu">
           <div id="customPreviewLabel" class="previewLabel">Bubu</div>
         </div>
         <nav id="categoryList" class="categoryList">
@@ -798,14 +829,14 @@ body.game-running .attackCtrl{
       </div>
     </section>
 
-    <section id="charactersPanel" class="v7Panel charactersPanel">
+    <section id="charactersPanel" class="v7Panel charactersPanel menuOverlayPanel hidden">
       <header class="panelHeader charsHead">
         <button class="panelBack" id="charsBackBtn">←</button>
         <h2 id="charactersTitle">Characters</h2>
         <div></div>
       </header>
       <div class="characterRow">
-        <button class="charCard active"><div class="charPortrait bubuPortrait"><img class="exactBubuImg" src="bubu.png?v=1" alt="Bubu"></div><b>Bubu</b><em>✓</em></button>
+        <button class="charCard active"><div class="charPortrait bubuPortrait"><img class="exactBubuImg" src="bubu_source.png?v=22" alt="Bubu"></div><b>Bubu</b><em>✓</em></button>
         <button class="charCard lockedChar" data-name="Kiki"><div class="charPortrait kikiPortrait">🎀</div><b>Kiki</b><em>🔒</em></button>
         <button class="charCard lockedChar" data-name="Momo"><div class="charPortrait momoPortrait">🐼</div><b>Momo</b><em>🔒</em></button>
         <button class="charCard lockedChar" data-name="Toto"><div class="charPortrait totoPortrait">🦖</div><b>Toto</b><em>🔒</em></button>
@@ -878,7 +909,7 @@ body.game-running .attackCtrl{
     <div id="rightBtn" class="ctrl">→</div>
   </div>
   <div class="controlSide">
-    <div id="attackBtn" class="ctrl attackCtrl">★</div>
+    <div id="attackBtn" class="ctrl attackCtrl">🏹</div>
     <div id="jumpBtn" class="ctrl">↑</div>
   </div>
 </div>
@@ -930,7 +961,7 @@ body.game-running .attackCtrl{
 </div>
 
 <script>
-/* BUBU ADVENTURE V20 — single file build */
+/* BUBU ADVENTURE V21 — single file build */
 
 const translations={
 en:{play:"PLAY",worlds:"WORLDS",settings:"SETTINGS",selectWorld:"SELECT WORLD",candy:"Candy World",dino:"Dino Island",space:"Space World",back:"BACK",language:"LANGUAGE",complete:"LEVEL COMPLETE!",again:"PLAY AGAIN",menu:"MENU",paused:"PAUSED",resume:"RESUME",rotate:"Turn your phone sideways"},
@@ -1117,27 +1148,38 @@ function selectCustomItem(cat,item){
   applyBubuStyle();
   renderCustomizer(cat);
 }
-function scrollToPanel(el){
-  if(!el)return;
-  el.scrollIntoView({behavior:'smooth',block:'start'});
+function hideMenuPanels(){
+  if(window.customizePanel) customizePanel.classList.add('hidden');
+  if(window.charactersPanel) charactersPanel.classList.add('hidden');
+}
+function openCustomizer(){
+  hideMenuPanels();
+  if(window.customizePanel) customizePanel.classList.remove('hidden');
+}
+function openCharactersPanel(){
+  hideMenuPanels();
+  if(window.charactersPanel) charactersPanel.classList.remove('hidden');
 }
 
 applyBubuStyle();
 updateWallet();
 renderCustomizer('hats');
+hideMenuPanels();
 
 document.querySelectorAll('.catBtn').forEach(b=>b.addEventListener('click',()=>renderCustomizer(b.dataset.cat)));
-if(window.shopBtn) shopBtn.addEventListener('click',()=>scrollToPanel(customizePanel));
-if(window.trophyBtn) trophyBtn.addEventListener('click',()=>scrollToPanel(charactersPanel));
+if(window.shopBtn) shopBtn.addEventListener('click',openCustomizer);
+if(window.trophyBtn) trophyBtn.addEventListener('click',openCharactersPanel);
 if(window.giftBtn) giftBtn.addEventListener('click',()=>showToast(ux().coming));
 if(window.coinPlusBtn) coinPlusBtn.addEventListener('click',()=>showToast(ux().coming));
-if(window.customBackBtn) customBackBtn.addEventListener('click',()=>menu.scrollTo({top:0,behavior:'smooth'}));
-if(window.charsBackBtn) charsBackBtn.addEventListener('click',()=>menu.scrollTo({top:0,behavior:'smooth'}));
+if(window.customBackBtn) customBackBtn.addEventListener('click',hideMenuPanels);
+if(window.charsBackBtn) charsBackBtn.addEventListener('click',hideMenuPanels);
 if(window.worldPreviewCard) worldPreviewCard.addEventListener('click',(e)=>{if(e.target!==worldBtn) openWorlds();});
+if(window.customizePanel) customizePanel.addEventListener('click',e=>{ if(e.target===customizePanel) hideMenuPanels(); });
+if(window.charactersPanel) charactersPanel.addEventListener('click',e=>{ if(e.target===charactersPanel) hideMenuPanels(); });
 document.querySelectorAll('.lockedChar').forEach(c=>c.addEventListener('click',()=>showToast((c.dataset.name||'Character')+' — '+ux().coming)));
 
 /* Phaser */
-let player,playerShadow,platforms,coins,stars,enemies,projectiles,finishFlag,cursors;
+let player,playerShadow,platforms,coins,stars,enemies,projectiles,quiverSprite,bowSprite,finishFlag,cursors;
 let moveLeft=false,moveRight=false;
 let gameActive=false,coinScore=0,starScore=0,lives=3;
 let sceneRef=null;
@@ -1161,7 +1203,7 @@ const config={
 new Phaser.Game(config);
 
 function preload(){
-  this.load.image('bubuExact','bubu.png?v=1');
+  this.load.image('bubuExact','bubu_source.png?v=22');
 }
 
 function createTextures(scene){
@@ -1325,19 +1367,35 @@ function createTextures(scene){
   g.fillStyle(0xffffff,0.4); g.fillEllipse(17,30,8,4);
   g.generateTexture('coin',50,50);
 
-  /* magic star shot */
+  /* bow */
   g.clear();
-  g.fillStyle(0xffdc35,1);
-  const shotPts=[];
-  for(let i=0;i<10;i++){
-    const a=-Math.PI/2+i*Math.PI/5;
-    const rr=i%2===0?20:9;
-    shotPts.push(new Phaser.Geom.Point(24+Math.cos(a)*rr,24+Math.sin(a)*rr));
+  g.lineStyle(7,0x7b431f,1);
+  g.beginPath();
+  g.arc(34,34,27,-1.15,1.15,false);
+  g.strokePath();
+  g.lineStyle(3,0xe7d2a1,1);
+  g.beginPath(); g.moveTo(45,9); g.lineTo(45,59); g.strokePath();
+  g.generateTexture('bowTex',70,68);
+
+  /* quiver with arrows */
+  g.clear();
+  g.fillStyle(0x7e481f,1); g.fillRoundedRect(18,20,26,52,9);
+  g.lineStyle(4,0x4f2b14,1); g.strokeRoundedRect(18,20,26,52,9);
+  for(let i=0;i<3;i++){
+    const x=23+i*8;
+    g.lineStyle(3,0x5a341a,1); g.lineBetween(x,22,x-4,1);
+    g.fillStyle(0xe9332e,1); g.fillTriangle(x-8,2,x-1,-2,x-3,8);
   }
-  g.fillPoints(shotPts,true);
-  g.lineStyle(4,0xe29b00,1); g.strokePoints(shotPts,true);
-  g.fillStyle(0xffffff,.65); g.fillCircle(18,17,4);
-  g.generateTexture('powerShot',48,48);
+  g.generateTexture('quiverTex',62,76);
+
+  /* flying arrow */
+  g.clear();
+  g.lineStyle(4,0x6e3d1e,1); g.lineBetween(5,14,62,14);
+  g.fillStyle(0xb8d9e8,1); g.fillTriangle(62,7,76,14,62,21);
+  g.fillStyle(0xe93631,1);
+  g.fillTriangle(7,14,0,7,13,11);
+  g.fillTriangle(7,14,0,21,13,17);
+  g.generateTexture('arrowTex',78,28);
 
   /* enemy */
   g.clear();
@@ -1543,11 +1601,14 @@ function create(){
   playerShadow=this.add.image(220,634,'shadow').setScale(.92);
   playerShadow.setDepth(4);
 
-  player=this.physics.add.sprite(220,500,'bubuExact').setScale(.13);
+  player=this.physics.add.sprite(220,500,'bubuIdle').setScale(.13);
   player.setDepth(6);
   player.setCollideWorldBounds(true);
   player.body.setSize(500,1050).setOffset(310,230);
   this.physics.add.collider(player,platforms);
+
+  quiverSprite=this.add.image(player.x-34,player.y-18,'quiverTex').setDepth(5).setScale(.78);
+  bowSprite=this.add.image(player.x-18,player.y-12,'bowTex').setDepth(8).setScale(.82).setVisible(false);
 
   // coins
   coins=this.physics.add.staticGroup();
@@ -1581,7 +1642,7 @@ function create(){
   this.physics.add.overlap(player,enemies,hitEnemy,null,this);
 
   projectiles=this.physics.add.group({allowGravity:false});
-  this.physics.add.overlap(projectiles,enemies,magicHitEnemy,null,this);
+  this.physics.add.overlap(projectiles,enemies,arrowHitEnemy,null,this);
 
   finishFlag=this.physics.add.staticSprite(3460,565,'flag');
   this.physics.add.overlap(player,finishFlag,finishLevel,null,this);
@@ -1599,6 +1660,17 @@ function create(){
 }
 function update(time){
   if(!gameActive||!player||!player.body)return;
+
+  if(quiverSprite){
+    const dir=player.flipX?-1:1;
+    quiverSprite.x=player.x-dir*30;
+    quiverSprite.y=player.y-10;
+    quiverSprite.setFlipX(dir<0);
+    quiverSprite.setVisible(player.visible);
+  }
+  if(bowSprite && !bowSprite.getData('shooting')){
+    bowSprite.setVisible(false);
+  }
 
   if(playerShadow){
     playerShadow.x=player.x;
@@ -1629,7 +1701,7 @@ function update(time){
   }
 
   if(!player.body.blocked.down){
-    player.setTexture("bubuExact");
+    player.setTexture("bubuJump");
     player.setScale(.132);
     player.setAngle(player.flipX ? -7 : 7);
   }else if(moving){
@@ -1637,8 +1709,8 @@ function update(time){
       bubuAnimTime=time;
       bubuRunFrame=1-bubuRunFrame;
     }
-    player.setTexture("bubuExact");
-    player.setScale(bubuRunFrame ? .133 : .127);
+    player.setTexture(bubuRunFrame ? "bubuRun1" : "bubuRun2");
+    player.setScale(.13);
     player.setAngle((right?1:-1)*(bubuRunFrame ? 2.3 : -2.3));
 
     if(time-lastDust>190){
@@ -1648,7 +1720,7 @@ function update(time){
       sceneRef.tweens.add({targets:d,x:d.x-(right?18:-18),y:d.y-8,alpha:0,scale:1.8,duration:420,onComplete:()=>d.destroy()});
     }
   }else{
-    player.setTexture("bubuExact");
+    player.setTexture("bubuIdle");
     player.setAngle(Math.sin(time/300)*.7);
     player.setScale(.13 + Math.sin(time/300)*.002);
   }
@@ -1725,24 +1797,60 @@ function hitEnemy(p,e){
   if(sceneRef.time.now < invulnerableUntil)return;
   loseLife();
 }
-function magicHitEnemy(shot,e){
+function arrowHitEnemy(shot,e){
   if(!shot?.active || !e?.active)return;
   shot.destroy();
   destroyEnemy(e,2);
 }
 function attack(){
-  if(!gameActive || !player?.body || !projectiles)return;
+  if(!gameActive || !player?.body || !projectiles || !bowSprite)return;
   const now=sceneRef.time.now;
-  if(now-lastAttack<420)return;
+  if(now-lastAttack<520)return;
   lastAttack=now;
 
   const dir=player.flipX?-1:1;
-  const shot=projectiles.create(player.x+dir*45,player.y-8,'powerShot').setScale(.72);
-  shot.setDepth(12);
-  shot.body.setAllowGravity(false);
-  shot.setVelocityX(dir*650);
-  shot.setAngularVelocity(dir*480);
-  sceneRef.time.delayedCall(1200,()=>{if(shot?.active)shot.destroy();});
+  const backX=player.x-dir*24;
+  const handX=player.x+dir*40;
+
+  bowSprite.setData('shooting',true);
+  bowSprite.setVisible(true);
+  bowSprite.setFlipX(dir<0);
+  bowSprite.setAngle(dir<0?180:0);
+  bowSprite.setPosition(backX,player.y-10);
+  bowSprite.setScale(.72);
+
+  // Bow comes out from the backpack into Bubu's hands.
+  sceneRef.tweens.add({
+    targets:bowSprite,
+    x:handX,
+    y:player.y-14,
+    scale:.86,
+    duration:130,
+    ease:'Quad.easeOut',
+    onComplete:()=>{
+      const arrow=projectiles.create(handX+dir*35,player.y-14,'arrowTex').setScale(.82);
+      arrow.setDepth(12);
+      arrow.setFlipX(dir<0);
+      arrow.body.setAllowGravity(false);
+      arrow.setVelocityX(dir*760);
+      arrow.setVelocityY(-18);
+      sceneRef.time.delayedCall(1500,()=>{if(arrow?.active)arrow.destroy();});
+
+      // Tiny recoil and return the bow toward the backpack.
+      sceneRef.tweens.add({
+        targets:bowSprite,
+        x:backX,
+        y:player.y-8,
+        scale:.70,
+        duration:220,
+        ease:'Sine.easeIn',
+        onComplete:()=>{
+          bowSprite.setVisible(false);
+          bowSprite.setData('shooting',false);
+        }
+      });
+    }
+  });
 }
 function loseLife(){
   if(!gameActive)return;
@@ -1785,6 +1893,8 @@ function loseLife(){
 function showGameOver(){
   gameActive=false;
   player.body.enable=false;
+  if(quiverSprite)quiverSprite.setVisible(false);
+  if(bowSprite)bowSprite.setVisible(false);
   controls.classList.add("hidden");
   pauseBtn.classList.add("hidden");
   gameOverScreen.classList.remove("hidden");
@@ -1793,7 +1903,7 @@ function resetPlayer(){
   const x=Math.max(220,player.x-220);
   player.setVelocity(0,0);
   player.setPosition(x,500);
-  player.setTexture("bubuExact");
+  player.setTexture("bubuIdle");
   player.setScale(.13);
   player.setAngle(0);
   player.setAlpha(1);
@@ -1882,11 +1992,13 @@ async function startLevel(){
 
   player.setPosition(220,500);
   player.setVelocity(0,0);
-  player.setTexture("bubuExact");
+  player.setTexture("bubuIdle");
   player.setScale(.13);
   player.setAngle(0);
   player.setVisible(true);
   if(playerShadow)playerShadow.setVisible(true);
+  if(quiverSprite)quiverSprite.setVisible(true);
+  if(bowSprite){bowSprite.setVisible(false);bowSprite.setData('shooting',false);}
   player.body.enable=true;
   gameActive=true;
   syncOrientationOverlay();
@@ -1931,6 +2043,7 @@ async function goMenu(){
   menu.classList.remove("hidden");
   try{menu.scrollTo({top:0,behavior:"instant"});}catch(e){menu.scrollTop=0;}
   updateWallet();
+  hideMenuPanels();
 }
 function openWorlds(){
   menu.classList.add("hidden");
@@ -1959,6 +2072,7 @@ function resumeGame(){
 /* UI events */
 playBtn.onclick=openWorlds;
 worldBtn.onclick=openWorlds;
+worldPreviewCard.onclick=openWorlds;
 settingsBtn.onclick=openSettings;
 worldBackBtn.onclick=goMenu;
 settingsBack.onclick=goMenu;
