@@ -7,7 +7,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>BUBU Adventure — V6</title>
+<title>BUBU Adventure — V7</title>
 
 <script src="https://cdn.jsdelivr.net/npm/phaser@3.80.1/dist/phaser.min.js"></script>
 
@@ -420,6 +420,74 @@ button{font-family:inherit}
   box-shadow:inset 0 0 70px rgba(0,66,126,.12);
 }
 
+
+
+/* ===== V7 POLISHED HUB ===== */
+:root{
+  --cap-main:#e92f2b;--cap-light:#ff665e;
+  --hoodie-main:#e9312d;--hoodie-light:#ff5b54;
+  --bag-main:#1176c7;--bag-light:#4eb7ff;
+  --shoe-accent:#d92d29;
+}
+#menu.v7Menu{
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+  background:linear-gradient(#28aef7 0 28%,#8ce6ff 55%,#9be870 100%)!important;
+  scrollbar-width:none;
+  -webkit-overflow-scrolling:touch;
+  padding-bottom:28px;
+}
+#menu.v7Menu::-webkit-scrollbar{display:none}
+#menu.v7Menu:before,#menu.v7Menu:after{display:none!important}
+.v7Cloud{position:absolute;background:#fff;border-radius:60px;opacity:.92;filter:drop-shadow(0 5px 8px #5aa8cc33);pointer-events:none}
+.v7Cloud:before,.v7Cloud:after{content:"";position:absolute;background:#fff;border-radius:50%}
+.v7Cloud:before{width:60%;height:130%;left:12%;bottom:0}.v7Cloud:after{width:48%;height:100%;right:7%;bottom:0}
+.cloudA{width:160px;height:44px;left:-35px;top:85px}.cloudB{width:145px;height:40px;right:-30px;top:150px}
+.v7Hill{position:absolute;border-radius:50% 50% 0 0;pointer-events:none}
+.hillA{width:420px;height:180px;background:#76d954;left:-110px;top:390px;box-shadow:inset 0 20px 0 #9eed76}
+.hillB{width:470px;height:200px;background:#62c945;right:-150px;top:410px;box-shadow:inset 0 22px 0 #88df61}
+.v7Candy{position:absolute;width:24px;height:145px;border-radius:16px;background:repeating-linear-gradient(45deg,#fff 0 12px,#ff4d99 12px 24px);box-shadow:0 0 0 4px #fff8;z-index:1}
+.v7Candy:before{content:"";position:absolute;width:102px;height:102px;left:-39px;top:-72px;border-radius:50%;border:6px solid #fff8;background:conic-gradient(#ff4aa1 0 12.5%,#fff 12.5% 25%,#ff4aa1 25% 37.5%,#fff 37.5% 50%,#ff4aa1 50% 62.5%,#fff 62.5% 75%,#ff4aa1 75% 87.5%,#fff 87.5%);box-shadow:0 7px 0 #c92c76}
+.candyA{left:14px;top:420px;transform:scale(.72)}.candyB{right:12px;top:390px;transform:scale(.58)}
+.v7Wallet{position:sticky;top:8px;margin-left:auto;margin-right:9px;z-index:65;width:max-content;display:flex;align-items:center;gap:6px;background:linear-gradient(#0d609b,#074b7c);color:#fff;border:3px solid #fff;border-radius:19px;padding:6px 8px 6px 12px;font-weight:1000;font-size:17px;box-shadow:0 5px 12px #00436c55}
+.v7Wallet button{width:27px;height:27px;border:0;border-radius:50%;background:#39d267;color:#fff;font-weight:1000;font-size:20px;line-height:25px;box-shadow:inset 0 2px 4px #fff7,0 2px 0 #17873a}
+.v7SideRail{position:absolute;left:8px;top:66px;z-index:55;display:flex;flex-direction:column;gap:8px}
+.v7SideBtn{width:54px;min-height:55px;border:3px solid #fff;border-radius:15px;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-weight:1000;box-shadow:inset 0 4px 7px #fff5,0 5px 0 #0d5597,0 7px 12px #0043774d;text-shadow:0 2px 0 #0003}
+.v7SideBtn b{font-size:25px;line-height:26px}.v7SideBtn span{font-size:7px;max-width:46px;overflow:hidden;text-overflow:ellipsis}
+.settingsSide{background:linear-gradient(#49b9ff,#1576dc)}.giftSide{background:linear-gradient(#ff9f38,#f05a16)}.trophySide{background:linear-gradient(#83d647,#38a71e)}.shopSide{background:linear-gradient(#4aaeff,#0969ce)}
+.v7Hub{position:relative;z-index:5;width:min(100%,760px);margin:0 auto;padding:0 8px 25px 66px}
+.v7Top{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(105px,.72fr);gap:7px;align-items:stretch;min-height:470px}
+.v7HeroStage{position:relative;min-height:470px;border-radius:28px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding-top:10px;overflow:visible}
+.v7LogoWrap{text-align:center;z-index:4;transform:rotate(-1deg);margin-top:3px}
+.v7Logo{font-size:clamp(52px,14vw,104px);line-height:.78;font-weight:1000;letter-spacing:-4px;color:#ffc42d;-webkit-text-stroke:4px #1748a9;text-shadow:0 5px 0 #ea6500,0 9px 0 #fff,0 13px 0 #1752b2,0 18px 20px #07518b55}
+.v7SubLogo{margin-top:11px;font-size:clamp(23px,7vw,48px);font-weight:1000;color:#fff;-webkit-text-stroke:3px #1749ab;text-shadow:0 5px 0 #10408f;letter-spacing:-1px}
+.v7HeroArt{position:relative;width:min(100%,285px);height:292px;margin-top:-5px;z-index:3;animation:v7Bob 3s ease-in-out infinite}
+.heroSvg{width:100%;height:100%;overflow:visible}.heroGlasses{opacity:var(--glasses-opacity,0);transition:opacity .25s}
+.heroHatBadge{position:absolute;z-index:6;top:16px;left:50%;transform:translateX(-50%);font-size:36px;filter:drop-shadow(0 3px 2px #0004);pointer-events:none}
+@keyframes v7Bob{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-5px) rotate(1deg)}}
+.v7PlayBtn{position:relative;z-index:8;margin-top:-15px;width:min(92%,310px);height:66px;border:5px solid #fff;border-radius:24px;background:linear-gradient(#76ed39,#29b716);color:#fff;font-size:29px;font-weight:1000;text-shadow:0 3px 0 #14720b;box-shadow:inset 0 7px 10px #fff7,0 7px 0 #13870a,0 12px 18px #00482155;display:flex;align-items:center;justify-content:center;gap:14px}
+.v7PlayBtn:active{transform:translateY(5px);box-shadow:inset 0 4px 8px #fff6,0 2px 0 #13870a}.playTriangle{font-size:35px;filter:drop-shadow(0 2px 0 #13720c)}
+.v7WorldPreview{align-self:center;height:310px;margin-top:90px;border:5px solid #fff;border-radius:22px;overflow:hidden;background:#0f78d1;box-shadow:0 7px 0 #07559d,0 12px 20px #07518c55;position:relative;cursor:pointer}
+.worldPreviewTop{height:67%;position:relative;overflow:hidden;background:linear-gradient(#54d2ff,#ffd5ee 74%,#ff80c3)}
+.worldMiniSky{position:absolute;inset:0;background:radial-gradient(circle at 20% 18%,#fff 0 7%,transparent 8%),radial-gradient(circle at 72% 22%,#fff 0 8%,transparent 9%)}
+.miniCastle{position:absolute;right:-10px;bottom:18px;font-size:68px;filter:drop-shadow(0 5px 3px #9a4c8255)}.miniLollipop{position:absolute;left:-12px;bottom:8px;font-size:72px;transform:rotate(-8deg)}
+.miniCandyLand{position:absolute;left:-10%;right:-10%;bottom:-25px;height:70px;border-radius:50%;background:#ff78b9;box-shadow:0 -9px 0 #ffa8d4,inset 0 12px 15px #fff4}
+.miniCloud{position:absolute;width:52px;height:18px;border-radius:20px;background:#fff;opacity:.9}.miniCloud:before,.miniCloud:after{content:"";position:absolute;background:#fff;border-radius:50%}.miniCloud:before{width:25px;height:25px;left:8px;bottom:0}.miniCloud:after{width:22px;height:22px;right:5px;bottom:0}.mc1{left:9px;top:24px}.mc2{right:7px;top:53px;transform:scale(.8)}
+.worldPreviewBottom{height:33%;padding:9px 6px 35px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(#f51d82,#b70059);color:#fff;text-shadow:0 2px 0 #6f0035;text-align:center}.worldPreviewBottom strong{font-size:clamp(15px,4vw,23px);line-height:1}.worldPreviewBottom span{margin-top:5px;font-size:16px;font-weight:1000}
+.v7WorldBtn{position:absolute;left:8px;right:8px;bottom:7px;height:30px;border:2px solid #fff;border-radius:12px;background:linear-gradient(#3baeff,#0a66c9);color:#fff;font-size:10px;font-weight:1000;box-shadow:0 2px 0 #074b97}
+.v7Panel{position:relative;margin-top:10px;border:5px solid #fff;border-radius:25px;background:linear-gradient(#1585d4,#0b65b0);box-shadow:0 8px 0 #07518f,0 14px 25px #064f8455;overflow:hidden}
+.panelHeader{height:54px;display:grid;grid-template-columns:48px 1fr auto;align-items:center;gap:5px;padding:0 9px;background:linear-gradient(#158bd9,#0b6bb8);border-bottom:3px solid #ffffff70;color:#fff}.panelHeader h2{margin:0;text-align:center;font-size:clamp(20px,5vw,32px);text-shadow:0 3px 0 #064a89}.panelBack{width:39px;height:39px;border-radius:13px;border:3px solid #fff;background:linear-gradient(#45b7ff,#0c67cb);color:#fff;font-size:25px;font-weight:1000;box-shadow:0 3px 0 #06498f}.panelWallet{background:#06497b;border:2px solid #fff;border-radius:15px;padding:5px 8px;font-weight:1000;font-size:14px}
+.customBody{display:grid;grid-template-columns:108px 92px 1fr;gap:8px;padding:10px;background:linear-gradient(#178bd9,#0d70bc)}
+.customPreview{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:210px}.miniBubuFace{position:relative;width:95px;height:130px}.miniBubuFace:before{content:"";position:absolute;width:74px;height:76px;left:10px;top:26px;border-radius:50%;background:linear-gradient(135deg,#ffe0c1,#f5b487);border:4px solid #7d3b24;box-shadow:0 7px 8px #064d8655}.miniHair{position:absolute;width:70px;height:40px;left:12px;top:23px;border-radius:50% 50% 35% 35%;background:#67331d;z-index:2}.miniCap{position:absolute;width:76px;height:28px;left:8px;top:7px;border-radius:30px 30px 9px 9px;background:linear-gradient(var(--cap-light),var(--cap-main));border:4px solid #a91e1b;z-index:4}.miniCap:after{content:"★";position:absolute;left:29px;top:1px;color:#ffd72b;font-size:17px}.miniEye{position:absolute;top:58px;width:13px;height:19px;border-radius:50%;background:#183852;z-index:5;box-shadow:inset 3px 2px 0 #fff}.miniEye.e1{left:31px}.miniEye.e2{left:56px}.miniSmile{position:absolute;width:27px;height:13px;left:35px;top:81px;border-radius:3px 3px 20px 20px;background:#8c281f;z-index:5}.miniBubuFace:after{content:"★";position:absolute;left:36px;top:101px;width:23px;height:23px;border-radius:7px;background:var(--hoodie-main);color:#ffd72b;text-align:center;line-height:23px;font-size:17px;border:3px solid #a91e1b}.previewLabel{color:#fff;font-weight:1000;text-shadow:0 2px 0 #064a88;margin-top:3px}
+.categoryList{display:flex;flex-direction:column;gap:5px}.catBtn{height:37px;border:2px solid #ffffff7a;border-radius:10px;background:#0a5d9d;color:#fff;font-size:13px;font-weight:900;display:flex;align-items:center;gap:5px;padding:0 6px}.catBtn.active{background:#fff;color:#164c7a;border-color:#fff;box-shadow:inset 0 -3px 0 #cce7f7}.catBtn span{font-size:10px}
+.customGrid{display:grid;grid-template-columns:repeat(3,minmax(62px,1fr));gap:7px;align-content:start}.customItem{position:relative;min-height:91px;border:3px solid #9ed7f6;border-radius:14px;background:linear-gradient(#dff4ff,#9fd7f5);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;color:#17456b;font-weight:1000;box-shadow:inset 0 4px 7px #fff9}.customItem.selected{border-color:#ffd92e;box-shadow:0 0 0 3px #ffb700,inset 0 4px 7px #fff9}.customItem .thumb{font-size:34px;line-height:36px;filter:drop-shadow(0 2px 1px #2e6b8d44)}.customItem .price{font-size:11px;color:#fff;background:#0d6aaa;border-radius:10px;padding:2px 7px;text-shadow:0 1px 0 #06456f}.customItem .check{position:absolute;right:3px;bottom:3px;width:21px;height:21px;border-radius:50%;background:#39c94e;border:2px solid #fff;color:#fff;font-size:13px;line-height:17px;text-align:center;display:none}.customItem.selected .check{display:block}
+.charsHead{grid-template-columns:48px 1fr 48px}.characterRow{padding:10px;display:grid;grid-template-columns:repeat(4,1fr);gap:8px;background:linear-gradient(#178bd9,#0d70bc)}.charCard{position:relative;min-width:0;border:3px solid #75c4f0;border-radius:15px;background:linear-gradient(#cceeff,#7fc7ef);padding:5px 4px 7px;color:#16466f;font-weight:1000;box-shadow:inset 0 4px 7px #fff9}.charCard.active{border-color:#ffdc2f;box-shadow:0 0 0 3px #ffb900,inset 0 4px 7px #fff9}.charPortrait{height:72px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:38px;overflow:hidden;background:linear-gradient(#8dd9ff,#dff7ff)}.bubuPortrait{position:relative;background:linear-gradient(#8edaff,#dff7ff)}.bubuPortrait:before{content:"";width:44px;height:48px;border-radius:50%;background:#ffc99c;border:3px solid #7b3923;box-shadow:inset 0 12px 0 #66301d}.bubuPortrait:after{content:"";position:absolute;width:49px;height:18px;top:7px;border-radius:20px 20px 6px 6px;background:linear-gradient(var(--cap-light),var(--cap-main));border:3px solid #a91e1b}.bubuPortrait span{position:absolute;top:7px;z-index:3;color:#ffd72b;font-size:15px}.kikiPortrait{background:linear-gradient(#ffbde1,#ffe4f3)}.momoPortrait{background:linear-gradient(#d8f2ff,#fff)}.totoPortrait{background:linear-gradient(#8ee5cd,#e3fff4)}.charCard b{display:block;margin-top:3px;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.charCard em{position:absolute;right:3px;bottom:3px;font-style:normal;font-size:13px}.lockedChar{filter:saturate(.8)}
+.v7Toast{position:fixed;left:50%;bottom:22px;z-index:100;transform:translate(-50%,25px);opacity:0;pointer-events:none;background:#123f70e8;border:3px solid #fff;border-radius:18px;color:#fff;font-weight:1000;padding:10px 18px;box-shadow:0 8px 20px #0005;transition:.25s}.v7Toast.show{opacity:1;transform:translate(-50%,0)}
+@media (min-width:700px){
+  .v7Hub{width:min(100%,1080px);padding-left:78px}.v7Top{grid-template-columns:1.55fr .72fr;min-height:520px}.v7HeroStage{min-height:520px}.v7HeroArt{width:330px;height:340px}.v7WorldPreview{height:350px;margin-top:105px}.v7SideRail{left:max(12px,calc(50% - 535px))}.customBody{grid-template-columns:160px 125px 1fr}.customGrid{grid-template-columns:repeat(4,minmax(70px,1fr))}.characterRow{grid-template-columns:repeat(4,minmax(110px,1fr))}}
+@media (max-width:390px){
+  .v7Hub{padding-left:61px}.v7SideRail{left:5px}.v7SideBtn{width:48px;min-height:50px}.v7SideBtn b{font-size:22px}.v7Top{grid-template-columns:minmax(0,1.75fr) minmax(92px,.7fr);min-height:445px}.v7HeroStage{min-height:445px}.v7HeroArt{height:270px}.v7WorldPreview{height:285px;margin-top:86px}.v7Logo{font-size:50px}.v7SubLogo{font-size:23px}.customBody{grid-template-columns:92px 78px 1fr;gap:5px;padding:7px}.customPreview{min-height:190px}.miniBubuFace{transform:scale(.88)}.catBtn{height:34px;padding:0 4px}.catBtn span{font-size:8px}.customGrid{gap:5px}.customItem{min-height:82px}.customItem .thumb{font-size:30px}.characterRow{gap:5px;padding:7px}.charPortrait{height:62px;font-size:32px}}
+
 </style>
 </head>
 <body>
@@ -427,36 +495,186 @@ button{font-family:inherit}
 <div id="game"></div>
 
 <!-- MENU -->
-<div id="menu" class="screen">
-  <div class="candyStick c1"></div>
-  <div class="candyStick c2"></div>
+<div id="menu" class="screen v7Menu">
+  <div class="v7Cloud cloudA"></div>
+  <div class="v7Cloud cloudB"></div>
+  <div class="v7Hill hillA"></div>
+  <div class="v7Hill hillB"></div>
+  <div class="v7Candy candyA"></div>
+  <div class="v7Candy candyB"></div>
 
-  <div class="menuContent">
-    <div class="heroSide">
-      <div class="logo">BUBU</div>
-      <div class="sublogo">ADVENTURE</div>
+  <div class="v7Wallet">🪙 <span id="menuCoins">1250</span><button id="coinPlusBtn">+</button></div>
 
-      <div class="bubuHero">
-        <div class="bp"></div>
-        <div class="arm l"></div><div class="arm r"></div>
-        <div class="leg l"></div><div class="leg r"></div>
-        <div class="body"></div>
-        <div class="head"></div>
-        <div class="hair"></div>
-        <div class="facePatch"></div>
-        <div class="cap"></div>
-        <div class="eye l"></div><div class="eye r"></div>
-        <div class="smile"></div>
-        <div class="shoe l"></div><div class="shoe r"></div>
+  <aside class="v7SideRail">
+    <button id="settingsBtn" class="v7SideBtn settingsSide"><b>⚙</b><span id="settingsSideLabel">Settings</span></button>
+    <button id="giftBtn" class="v7SideBtn giftSide"><b>🎁</b><span id="giftSideLabel">Gift</span></button>
+    <button id="trophyBtn" class="v7SideBtn trophySide"><b>🏆</b><span id="trophySideLabel">Characters</span></button>
+    <button id="shopBtn" class="v7SideBtn shopSide"><b>🛒</b><span id="shopSideLabel">Shop</span></button>
+  </aside>
+
+  <main class="v7Hub">
+    <section class="v7Top">
+      <div class="v7HeroStage">
+        <div class="v7LogoWrap">
+          <div class="v7Logo">BUBU</div>
+          <div class="v7SubLogo">ADVENTURE</div>
+        </div>
+
+        <div class="v7HeroArt" aria-label="Bubu">
+          <div id="heroHatBadge" class="heroHatBadge"></div>
+          <svg viewBox="0 0 270 330" class="heroSvg" role="img" aria-label="Bubu character">
+            <defs>
+              <linearGradient id="skinG" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#ffe1c4"/><stop offset="0.55" stop-color="#ffc79d"/><stop offset="1" stop-color="#f3a77d"/>
+              </linearGradient>
+              <linearGradient id="hairG" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#7b4026"/><stop offset="0.55" stop-color="#572615"/><stop offset="1" stop-color="#351309"/>
+              </linearGradient>
+              <linearGradient id="capG" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" class="capLight" stop-color="var(--cap-light,#ff665e)"/><stop offset="1" class="capMain" stop-color="var(--cap-main,#e92f2b)"/>
+              </linearGradient>
+              <linearGradient id="hoodG" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="var(--hoodie-light,#ff5b54)"/><stop offset="1" stop-color="var(--hoodie-main,#e9312d)"/>
+              </linearGradient>
+              <linearGradient id="jeanG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2f8ddd"/><stop offset="1" stop-color="#145ea6"/></linearGradient>
+              <linearGradient id="bagG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--bag-light,#4eb7ff)"/><stop offset="1" stop-color="var(--bag-main,#1176c7)"/></linearGradient>
+              <filter id="heroShadow" x="-30%" y="-30%" width="160%" height="180%"><feDropShadow dx="0" dy="9" stdDeviation="7" flood-color="#23566c" flood-opacity=".35"/></filter>
+              <filter id="softGlow"><feGaussianBlur stdDeviation="1.2"/></filter>
+            </defs>
+            <g filter="url(#heroShadow)" transform="translate(2 0)">
+              <!-- backpack -->
+              <path d="M62 167 C38 168 25 190 30 224 L45 264 C52 278 78 275 88 259 L93 191 C92 177 81 168 62 167Z" fill="url(#bagG)" stroke="#07549a" stroke-width="7"/>
+              <path d="M41 190 C57 178 78 180 90 195" fill="none" stroke="#77c9ff" stroke-width="7" stroke-linecap="round" opacity=".85"/>
+              <!-- rear arm -->
+              <path d="M94 187 C68 194 55 213 49 231" fill="none" stroke="url(#hoodG)" stroke-width="27" stroke-linecap="round"/>
+              <circle cx="48" cy="235" r="16" fill="url(#skinG)" stroke="#9b5538" stroke-width="5"/>
+              <!-- raised leg -->
+              <path d="M123 250 C102 260 88 279 83 300" fill="none" stroke="url(#jeanG)" stroke-width="31" stroke-linecap="round"/>
+              <path d="M76 294 C58 294 43 304 46 316 C50 327 77 329 100 321 L105 308 C96 300 87 296 76 294Z" fill="#fff" stroke="var(--shoe-accent,#d92d29)" stroke-width="8"/>
+              <path d="M54 310 L94 314" stroke="var(--shoe-accent,#d92d29)" stroke-width="7" stroke-linecap="round"/>
+              <!-- body -->
+              <path d="M100 165 C119 151 157 150 177 163 C188 175 190 215 181 249 C159 265 119 265 98 246 C91 215 91 181 100 165Z" fill="url(#hoodG)" stroke="#a51c19" stroke-width="7"/>
+              <path d="M119 181 C135 173 157 174 172 183" fill="none" stroke="#ff8077" stroke-width="7" stroke-linecap="round" opacity=".8"/>
+              <path d="M119 229 Q140 242 164 229" fill="none" stroke="#bb211e" stroke-width="5" stroke-linecap="round"/>
+              <path d="M138 183 l7 14 16 2-12 11 4 16-15-8-14 8 4-16-12-11 16-2z" fill="#ffd92d" stroke="#e6a900" stroke-width="3"/>
+              <!-- forward arm -->
+              <path d="M173 181 C201 184 219 170 230 154" fill="none" stroke="url(#hoodG)" stroke-width="27" stroke-linecap="round"/>
+              <circle cx="234" cy="149" r="16" fill="url(#skinG)" stroke="#9b5538" stroke-width="5"/>
+              <path d="M240 146 q10 -9 15 -1" fill="none" stroke="#9b5538" stroke-width="4" stroke-linecap="round"/>
+              <!-- standing leg -->
+              <path d="M161 248 C174 267 181 286 179 309" fill="none" stroke="url(#jeanG)" stroke-width="31" stroke-linecap="round"/>
+              <path d="M166 300 C181 299 197 306 204 318 C199 330 168 333 146 326 L143 313 C148 307 156 302 166 300Z" fill="#fff" stroke="var(--shoe-accent,#d92d29)" stroke-width="8"/>
+              <path d="M153 315 L195 319" stroke="var(--shoe-accent,#d92d29)" stroke-width="7" stroke-linecap="round"/>
+              <!-- neck -->
+              <rect x="126" y="145" width="37" height="33" rx="15" fill="url(#skinG)" stroke="#9b5538" stroke-width="5"/>
+              <!-- ears -->
+              <circle cx="93" cy="99" r="25" fill="url(#skinG)" stroke="#87432d" stroke-width="6"/>
+              <circle cx="188" cy="99" r="25" fill="url(#skinG)" stroke="#87432d" stroke-width="6"/>
+              <path d="M87 98 q8 -9 15 0" fill="none" stroke="#e89b79" stroke-width="5" stroke-linecap="round"/>
+              <path d="M181 98 q8 -9 15 0" fill="none" stroke="#e89b79" stroke-width="5" stroke-linecap="round"/>
+              <!-- head -->
+              <ellipse cx="141" cy="100" rx="69" ry="73" fill="url(#skinG)" stroke="#87432d" stroke-width="7"/>
+              <!-- hair -->
+              <path d="M79 94 C70 51 96 23 132 18 C171 11 202 34 207 68 C196 54 183 52 170 55 C159 34 143 31 132 46 C119 31 100 38 98 57 C87 61 81 75 79 94Z" fill="url(#hairG)"/>
+              <path d="M93 61 C103 35 126 34 134 55 C142 33 165 36 170 58 C180 46 195 52 200 68 C180 63 161 69 146 80 C130 66 110 62 93 61Z" fill="#6a321e"/>
+              <ellipse cx="106" cy="47" rx="15" ry="10" fill="#8d4b2c" opacity=".8" transform="rotate(-20 106 47)"/>
+              <!-- cap -->
+              <path d="M89 45 C98 17 120 7 151 8 C178 8 198 20 204 47 C170 38 129 38 89 45Z" fill="url(#capG)" stroke="#a81e1b" stroke-width="7"/>
+              <path d="M172 42 C202 40 226 47 236 57 C217 66 193 65 169 59Z" fill="var(--cap-main,#e92f2b)" stroke="#a81e1b" stroke-width="7"/>
+              <ellipse cx="116" cy="25" rx="21" ry="7" fill="#ff8c83" opacity=".55" transform="rotate(-10 116 25)"/>
+              <path d="M148 20 l5 10 11 2-8 8 2 11-10-5-10 5 2-11-8-8 11-2z" fill="#ffd92d" stroke="#e6a900" stroke-width="2.5"/>
+              <!-- eyebrows -->
+              <path d="M108 88 Q119 80 130 86" fill="none" stroke="#5b2a1a" stroke-width="6" stroke-linecap="round"/>
+              <path d="M153 86 Q165 80 177 88" fill="none" stroke="#5b2a1a" stroke-width="6" stroke-linecap="round"/>
+              <!-- eyes -->
+              <ellipse cx="119" cy="105" rx="20" ry="25" fill="#fff" stroke="#6f3825" stroke-width="4"/>
+              <ellipse cx="164" cy="105" rx="20" ry="25" fill="#fff" stroke="#6f3825" stroke-width="4"/>
+              <ellipse cx="122" cy="108" rx="11" ry="16" fill="#2e6594"/>
+              <ellipse cx="161" cy="108" rx="11" ry="16" fill="#2e6594"/>
+              <ellipse cx="123" cy="111" rx="7" ry="11" fill="#111820"/>
+              <ellipse cx="160" cy="111" rx="7" ry="11" fill="#111820"/>
+              <circle cx="127" cy="102" r="4.5" fill="#fff"/><circle cx="164" cy="102" r="4.5" fill="#fff"/>
+              <circle cx="117" cy="114" r="2.5" fill="#8fd0ff"/><circle cx="155" cy="114" r="2.5" fill="#8fd0ff"/>
+              <!-- cheeks/nose -->
+              <ellipse cx="101" cy="130" rx="15" ry="7" fill="#ff8e88" opacity=".38"/>
+              <ellipse cx="180" cy="130" rx="15" ry="7" fill="#ff8e88" opacity=".38"/>
+              <ellipse cx="142" cy="126" rx="8" ry="5" fill="#efa07f"/>
+              <!-- smile -->
+              <path d="M119 136 Q141 157 165 136 Q159 166 140 167 Q122 164 119 136Z" fill="#7f231d" stroke="#6a1b16" stroke-width="3"/>
+              <path d="M126 140 Q142 148 158 140" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round"/>
+              <path d="M132 158 Q143 151 153 158" fill="none" stroke="#ff7075" stroke-width="6" stroke-linecap="round"/>
+              <!-- nose shine / face highlight -->
+              <ellipse cx="105" cy="76" rx="22" ry="11" fill="#fff" opacity=".10" transform="rotate(-25 105 76)"/>
+              <!-- glasses optional -->
+              <g id="heroGlasses" class="heroGlasses">
+                <circle cx="119" cy="105" r="25" fill="none" stroke="#1a2b44" stroke-width="7"/>
+                <circle cx="164" cy="105" r="25" fill="none" stroke="#1a2b44" stroke-width="7"/>
+                <path d="M143 104 L140 104" stroke="#1a2b44" stroke-width="7" stroke-linecap="round"/>
+                <path d="M94 101 L80 95 M189 101 L202 94" stroke="#1a2b44" stroke-width="6" stroke-linecap="round"/>
+              </g>
+            </g>
+          </svg>
+        </div>
+
+        <button id="playBtn" class="v7PlayBtn"><span class="playTriangle">▶</span><span id="playLabel">PLAY</span></button>
       </div>
-    </div>
 
-    <div class="menuButtons">
-      <button id="playBtn" class="bigBtn play">▶ PLAY</button>
-      <button id="worldBtn" class="bigBtn worlds">🌍 WORLDS</button>
-      <button id="settingsBtn" class="bigBtn settings">⚙ SETTINGS</button>
-    </div>
-  </div>
+      <div id="worldPreviewCard" class="v7WorldPreview" role="button" tabindex="0">
+        <div class="worldPreviewTop">
+          <div class="worldMiniSky"></div>
+          <div class="miniCastle">🏰</div>
+          <div class="miniLollipop">🍭</div>
+          <div class="miniCloud mc1"></div><div class="miniCloud mc2"></div>
+          <div class="miniCandyLand"></div>
+        </div>
+        <div class="worldPreviewBottom">
+          <strong id="worldPreviewName">Candy World</strong>
+          <span>⭐ 20/20</span>
+        </div>
+        <button id="worldBtn" class="v7WorldBtn">🌍 WORLDS</button>
+      </div>
+    </section>
+
+    <section id="customizePanel" class="v7Panel customizePanel">
+      <header class="panelHeader">
+        <button class="panelBack" id="customBackBtn">←</button>
+        <h2 id="customizeTitle">Customize Bubu</h2>
+        <div class="panelWallet">🪙 <span id="customCoins">1250</span></div>
+      </header>
+      <div class="customBody">
+        <div class="customPreview">
+          <div class="miniBubuFace">
+            <div class="miniHair"></div><div class="miniCap"></div><div class="miniEye e1"></div><div class="miniEye e2"></div><div class="miniSmile"></div>
+          </div>
+          <div id="customPreviewLabel" class="previewLabel">Bubu</div>
+        </div>
+        <nav id="categoryList" class="categoryList">
+          <button class="catBtn active" data-cat="hats">🧢 <span>Hats</span></button>
+          <button class="catBtn" data-cat="outfits">👕 <span>Outfits</span></button>
+          <button class="catBtn" data-cat="shoes">👟 <span>Shoes</span></button>
+          <button class="catBtn" data-cat="bags">🎒 <span>Bags</span></button>
+          <button class="catBtn" data-cat="glasses">👓 <span>Glasses</span></button>
+        </nav>
+        <div id="customGrid" class="customGrid"></div>
+      </div>
+    </section>
+
+    <section id="charactersPanel" class="v7Panel charactersPanel">
+      <header class="panelHeader charsHead">
+        <button class="panelBack" id="charsBackBtn">←</button>
+        <h2 id="charactersTitle">Characters</h2>
+        <div></div>
+      </header>
+      <div class="characterRow">
+        <button class="charCard active"><div class="charPortrait bubuPortrait"><span>★</span></div><b>Bubu</b><em>✓</em></button>
+        <button class="charCard lockedChar" data-name="Kiki"><div class="charPortrait kikiPortrait">🎀</div><b>Kiki</b><em>🔒</em></button>
+        <button class="charCard lockedChar" data-name="Momo"><div class="charPortrait momoPortrait">🐼</div><b>Momo</b><em>🔒</em></button>
+        <button class="charCard lockedChar" data-name="Toto"><div class="charPortrait totoPortrait">🦖</div><b>Toto</b><em>🔒</em></button>
+      </div>
+    </section>
+  </main>
+
+  <div id="v7Toast" class="v7Toast">Coming soon!</div>
 </div>
 
 <!-- WORLD SELECT -->
@@ -557,7 +775,7 @@ button{font-family:inherit}
 </div>
 
 <script>
-/* BUBU ADVENTURE V6 — single file build */
+/* BUBU ADVENTURE V7 — single file build */
 
 const translations={
 en:{play:"PLAY",worlds:"WORLDS",settings:"SETTINGS",selectWorld:"SELECT WORLD",candy:"Candy World",dino:"Dino Island",space:"Space World",back:"BACK",language:"LANGUAGE",complete:"LEVEL COMPLETE!",again:"PLAY AGAIN",menu:"MENU",paused:"PAUSED",resume:"RESUME",rotate:"Turn your phone sideways"},
@@ -589,11 +807,24 @@ let lang=localStorage.getItem("bubuLang")||"en";
 
 function tr(){return translations[lang]||translations.en}
 
+const uiText={
+  en:{customize:"Customize Bubu",characters:"Characters",settings:"Settings",gift:"Gift",shop:"Shop",coming:"Coming soon!",hats:"Hats",outfits:"Outfits",shoes:"Shoes",bags:"Bags",glasses:"Glasses"},
+  ka:{customize:"ბუბუს მორგება",characters:"პერსონაჟები",settings:"პარამეტრები",gift:"საჩუქარი",shop:"მაღაზია",coming:"მალე დაემატება!",hats:"ქუდები",outfits:"ტანსაცმელი",shoes:"ფეხსაცმელი",bags:"ჩანთები",glasses:"სათვალეები"},
+  ru:{customize:"Настроить Бубу",characters:"Персонажи",settings:"Настройки",gift:"Подарок",shop:"Магазин",coming:"Скоро!",hats:"Шапки",outfits:"Одежда",shoes:"Обувь",bags:"Рюкзаки",glasses:"Очки"}
+};
+function ux(){return uiText[lang]||uiText.en}
+
 function applyLanguage(){
-  const t=tr();
-  playBtn.innerHTML="▶ "+t.play;
-  worldBtn.innerHTML="🌍 "+t.worlds;
-  settingsBtn.innerHTML="⚙ "+t.settings;
+  const t=tr(),u=ux();
+  if(window.playLabel) playLabel.textContent=t.play;
+  if(window.worldBtn) worldBtn.innerHTML="🌍 "+t.worlds;
+  if(window.settingsSideLabel) settingsSideLabel.textContent=u.settings;
+  if(window.giftSideLabel) giftSideLabel.textContent=u.gift;
+  if(window.trophySideLabel) trophySideLabel.textContent=u.characters;
+  if(window.shopSideLabel) shopSideLabel.textContent=u.shop;
+  if(window.customizeTitle) customizeTitle.textContent=u.customize;
+  if(window.charactersTitle) charactersTitle.textContent=u.characters;
+  if(window.worldPreviewName) worldPreviewName.textContent=t.candy;
   worldTitle.textContent=t.selectWorld;
   candyName.textContent=t.candy;
   dinoName.textContent=t.dino;
@@ -608,8 +839,9 @@ function applyLanguage(){
   resumeBtn.innerHTML="▶ "+t.resume;
   quitBtn.innerHTML="🏠 "+t.menu;
   if(window.rotateText) rotateText.textContent=t.rotate || translations.en.rotate;
+  document.querySelectorAll('.catBtn').forEach(b=>{const k=b.dataset.cat;if(u[k]) b.querySelector('span').textContent=u[k]});
   buildLanguages();
-}
+} 
 
 function buildLanguages(){
   langGrid.innerHTML="";
@@ -626,6 +858,128 @@ function buildLanguages(){
   });
 }
 applyLanguage();
+
+/* ===== V7 HUB / CUSTOMIZATION ===== */
+let walletCoins=parseInt(localStorage.getItem('bubuCoins')||'1250',10);
+let currentCategory='hats';
+let selectedStyle=JSON.parse(localStorage.getItem('bubuStyle')||'{}');
+let toastTimer=null;
+
+const customItems={
+  hats:[
+    {id:'red',icon:'🧢',price:0,vars:{'--cap-main':'#e92f2b','--cap-light':'#ff665e'},badge:''},
+    {id:'blue',icon:'🧢',price:100,vars:{'--cap-main':'#176fc4','--cap-light':'#55b9ff'},badge:''},
+    {id:'yellow',icon:'🧢',price:100,vars:{'--cap-main':'#f0a900','--cap-light':'#ffd94b'},badge:''},
+    {id:'black',icon:'🧢',price:100,vars:{'--cap-main':'#222a35','--cap-light':'#586170'},badge:''},
+    {id:'frog',icon:'🐸',price:100,vars:{'--cap-main':'#43b941','--cap-light':'#85e36f'},badge:'🐸'},
+    {id:'bear',icon:'🐻',price:100,vars:{'--cap-main':'#7e4a2b','--cap-light':'#b77a4b'},badge:'🐻'},
+    {id:'crown',icon:'👑',price:200,vars:{'--cap-main':'#f3a400','--cap-light':'#ffdf55'},badge:'👑'},
+    {id:'pirate',icon:'🏴‍☠️',price:200,vars:{'--cap-main':'#171b22','--cap-light':'#404957'},badge:'☠️'},
+    {id:'sport',icon:'⚾',price:200,vars:{'--cap-main':'#f6f7f8','--cap-light':'#ffffff'},badge:''}
+  ],
+  outfits:[
+    {id:'redHoodie',icon:'👕',price:0,vars:{'--hoodie-main':'#e9312d','--hoodie-light':'#ff5b54'}},
+    {id:'blueHoodie',icon:'👕',price:120,vars:{'--hoodie-main':'#176fc4','--hoodie-light':'#58b9ff'}},
+    {id:'greenHoodie',icon:'👕',price:120,vars:{'--hoodie-main':'#39a93c','--hoodie-light':'#77dd6a'}},
+    {id:'purpleHoodie',icon:'👕',price:150,vars:{'--hoodie-main':'#7a3dc0','--hoodie-light':'#bd78ff'}},
+    {id:'orangeHoodie',icon:'👕',price:150,vars:{'--hoodie-main':'#e97819','--hoodie-light':'#ffad4f'}},
+    {id:'blackHoodie',icon:'👕',price:180,vars:{'--hoodie-main':'#2c333d','--hoodie-light':'#66707d'}}
+  ],
+  shoes:[
+    {id:'redShoes',icon:'👟',price:0,vars:{'--shoe-accent':'#d92d29'}},
+    {id:'blueShoes',icon:'👟',price:100,vars:{'--shoe-accent':'#176fc4'}},
+    {id:'greenShoes',icon:'👟',price:100,vars:{'--shoe-accent':'#35a83a'}},
+    {id:'blackShoes',icon:'👟',price:120,vars:{'--shoe-accent':'#242a33'}},
+    {id:'orangeShoes',icon:'👟',price:120,vars:{'--shoe-accent':'#eb781d'}},
+    {id:'purpleShoes',icon:'👟',price:150,vars:{'--shoe-accent':'#7440bd'}}
+  ],
+  bags:[
+    {id:'blueBag',icon:'🎒',price:0,vars:{'--bag-main':'#1176c7','--bag-light':'#4eb7ff'}},
+    {id:'redBag',icon:'🎒',price:100,vars:{'--bag-main':'#c83231','--bag-light':'#ff6a62'}},
+    {id:'greenBag',icon:'🎒',price:100,vars:{'--bag-main':'#399a42','--bag-light':'#77df77'}},
+    {id:'yellowBag',icon:'🎒',price:120,vars:{'--bag-main':'#c98613','--bag-light':'#ffd755'}},
+    {id:'purpleBag',icon:'🎒',price:120,vars:{'--bag-main':'#6e3da8','--bag-light':'#b679ec'}},
+    {id:'blackBag',icon:'🎒',price:150,vars:{'--bag-main':'#26303c','--bag-light':'#667385'}}
+  ],
+  glasses:[
+    {id:'none',icon:'🙂',price:0,glasses:false},
+    {id:'round',icon:'👓',price:100,glasses:true},
+    {id:'sun',icon:'🕶️',price:150,glasses:true},
+    {id:'star',icon:'🤓',price:180,glasses:true}
+  ]
+};
+
+function updateWallet(){
+  if(window.menuCoins) menuCoins.textContent=walletCoins;
+  if(window.customCoins) customCoins.textContent=walletCoins;
+  localStorage.setItem('bubuCoins',String(walletCoins));
+}
+function showToast(msg){
+  if(!window.v7Toast)return;
+  v7Toast.textContent=msg;
+  v7Toast.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>v7Toast.classList.remove('show'),1300);
+}
+function applyBubuStyle(){
+  const root=document.documentElement;
+  const defaults={hat:'red',outfit:'redHoodie',shoes:'redShoes',bags:'blueBag',glasses:'none'};
+  selectedStyle={...defaults,...selectedStyle};
+  Object.entries(selectedStyle).forEach(([cat,id])=>{
+    const item=(customItems[cat]||[]).find(x=>x.id===id);
+    if(item?.vars) Object.entries(item.vars).forEach(([k,v])=>root.style.setProperty(k,v));
+  });
+  const hat=customItems.hats.find(x=>x.id===selectedStyle.hat);
+  if(window.heroHatBadge) heroHatBadge.textContent=hat?.badge||'';
+  const glass=customItems.glasses.find(x=>x.id===selectedStyle.glasses);
+  root.style.setProperty('--glasses-opacity',glass?.glasses?'1':'0');
+  localStorage.setItem('bubuStyle',JSON.stringify(selectedStyle));
+}
+function normalizeCategory(cat){return cat==='bags'?'bags':cat}
+function renderCustomizer(cat=currentCategory){
+  currentCategory=cat;
+  document.querySelectorAll('.catBtn').forEach(b=>b.classList.toggle('active',b.dataset.cat===cat));
+  if(!window.customGrid)return;
+  customGrid.innerHTML='';
+  (customItems[cat]||[]).forEach(item=>{
+    const b=document.createElement('button');
+    b.className='customItem'+(selectedStyle[cat]===item.id?' selected':'');
+    b.innerHTML=`<span class="thumb">${item.icon}</span><span class="price">${item.price?`🪙 ${item.price}`:'FREE'}</span><span class="check">✓</span>`;
+    b.onclick=()=>selectCustomItem(cat,item);
+    customGrid.appendChild(b);
+  });
+}
+function selectCustomItem(cat,item){
+  const ownedKey='owned_'+cat+'_'+item.id;
+  const owned=item.price===0||localStorage.getItem(ownedKey)==='1'||selectedStyle[cat]===item.id;
+  if(!owned){
+    if(walletCoins<item.price){showToast('Not enough coins');return;}
+    walletCoins-=item.price;
+    localStorage.setItem(ownedKey,'1');
+    updateWallet();
+  }
+  selectedStyle[cat]=item.id;
+  applyBubuStyle();
+  renderCustomizer(cat);
+}
+function scrollToPanel(el){
+  if(!el)return;
+  el.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+applyBubuStyle();
+updateWallet();
+renderCustomizer('hats');
+
+document.querySelectorAll('.catBtn').forEach(b=>b.addEventListener('click',()=>renderCustomizer(b.dataset.cat)));
+if(window.shopBtn) shopBtn.addEventListener('click',()=>scrollToPanel(customizePanel));
+if(window.trophyBtn) trophyBtn.addEventListener('click',()=>scrollToPanel(charactersPanel));
+if(window.giftBtn) giftBtn.addEventListener('click',()=>showToast(ux().coming));
+if(window.coinPlusBtn) coinPlusBtn.addEventListener('click',()=>showToast(ux().coming));
+if(window.customBackBtn) customBackBtn.addEventListener('click',()=>menu.scrollTo({top:0,behavior:'smooth'}));
+if(window.charsBackBtn) charsBackBtn.addEventListener('click',()=>menu.scrollTo({top:0,behavior:'smooth'}));
+if(window.worldPreviewCard) worldPreviewCard.addEventListener('click',(e)=>{if(e.target!==worldBtn) openWorlds();});
+document.querySelectorAll('.lockedChar').forEach(c=>c.addEventListener('click',()=>showToast((c.dataset.name||'Character')+' — '+ux().coming)));
 
 /* Phaser */
 let player,playerShadow,platforms,coins,stars,enemies,finishFlag,cursors;
@@ -1253,6 +1607,8 @@ async function startLevel(){
 function finishLevel(){
   if(!gameActive)return;
   gameActive=false;
+  walletCoins+=coinScore;
+  updateWallet();
   player.setVelocity(0,0);
   sceneRef.physics.pause();
 
@@ -1277,6 +1633,8 @@ async function goMenu(){
   worldScreen.classList.add("hidden");
   settingsScreen.classList.add("hidden");
   menu.classList.remove("hidden");
+  try{menu.scrollTo({top:0,behavior:"instant"});}catch(e){menu.scrollTop=0;}
+  updateWallet();
 }
 function openWorlds(){
   menu.classList.add("hidden");
