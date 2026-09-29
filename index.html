@@ -7,7 +7,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>BUBU Adventure — V24</title>
+<title>BUBU Adventure — V26</title>
 
 <script src="https://cdn.jsdelivr.net/npm/phaser@3.80.1/dist/phaser.min.js"></script>
 
@@ -972,6 +972,33 @@ body.game-running .attackCtrl{
   }
 }
 
+
+/* ===== V26 language top bar ===== */
+.settingsPanel{padding-top:14px!important}
+.settingsTopBar{
+  display:grid;
+  grid-template-columns:54px 1fr 54px;
+  align-items:center;
+  gap:6px;
+  margin-bottom:14px;
+}
+.settingsTopBar h2{
+  margin:0!important;
+  text-align:center!important;
+}
+.settingsBackTop{
+  width:50px;
+  height:50px;
+  border:4px solid #fff;
+  border-radius:18px;
+  background:linear-gradient(#54c5ff,#0a6bd8);
+  color:#fff;
+  font-size:30px;
+  font-weight:1000;
+  box-shadow:0 5px 0 #08478e;
+}
+.settingsBackTop:active{transform:translateY(3px);box-shadow:0 2px 0 #08478e}
+
 </style>
 </head>
 <body>
@@ -1005,7 +1032,7 @@ body.game-running .attackCtrl{
         </div>
 
         <div class="v7HeroArt" aria-label="Bubu">
-          <img class="exactBubuImg" src="bubu_v24.png?v=25" alt="Bubu">
+          <img class="exactBubuImg" src="bubu_v24.png?v=26" alt="Bubu">
         </div>
 
         <button id="playBtn" class="v7PlayBtn"><span class="playTriangle">▶</span><span id="playLabel">PLAY</span></button>
@@ -1035,7 +1062,7 @@ body.game-running .attackCtrl{
       </header>
       <div class="customBody">
         <div class="customPreview">
-          <img class="exactBubuImg" src="bubu_v24.png?v=25" alt="Bubu">
+          <img class="exactBubuImg" src="bubu_v24.png?v=26" alt="Bubu">
           <div id="customPreviewLabel" class="previewLabel">Bubu</div>
         </div>
         <nav id="categoryList" class="categoryList">
@@ -1056,7 +1083,7 @@ body.game-running .attackCtrl{
         <div></div>
       </header>
       <div class="characterRow">
-        <button class="charCard active"><div class="charPortrait bubuPortrait"><img class="exactBubuImg" src="bubu_v24.png?v=25" alt="Bubu"></div><b>Bubu</b><em>✓</em></button>
+        <button class="charCard active"><div class="charPortrait bubuPortrait"><img class="exactBubuImg" src="bubu_v24.png?v=26" alt="Bubu"></div><b>Bubu</b><em>✓</em></button>
         <button class="charCard lockedChar" data-name="Kiki"><div class="charPortrait kikiPortrait">🎀</div><b>Kiki</b><em>🔒</em></button>
         <button class="charCard lockedChar" data-name="Momo"><div class="charPortrait momoPortrait">🐼</div><b>Momo</b><em>🔒</em></button>
         <button class="charCard lockedChar" data-name="Toto"><div class="charPortrait totoPortrait">🦖</div><b>Toto</b><em>🔒</em></button>
@@ -1105,10 +1132,13 @@ body.game-running .attackCtrl{
 
 <!-- SETTINGS -->
 <div id="settingsScreen" class="screen hidden">
-  <div class="panel">
-    <h2 id="languageTitle">🌍 LANGUAGE</h2>
+  <div class="panel settingsPanel">
+    <div class="settingsTopBar">
+      <button id="settingsBack" class="settingsBackTop">←</button>
+      <h2 id="languageTitle">🌍 LANGUAGE</h2>
+      <div class="settingsTopSpacer"></div>
+    </div>
     <div id="langGrid" class="langGrid"></div>
-    <button id="settingsBack" class="backBtn" style="display:block;margin:24px auto 0">← BACK</button>
   </div>
 </div>
 
@@ -1181,7 +1211,7 @@ body.game-running .attackCtrl{
 </div>
 
 <script>
-/* BUBU ADVENTURE V25 — single file build */
+/* BUBU ADVENTURE V26 — new gameplay Bubu, stable movement */
 
 const translations={
 en:{play:"PLAY",worlds:"WORLDS",settings:"SETTINGS",selectWorld:"SELECT WORLD",candy:"Candy World",dino:"Dino Island",space:"Space World",back:"BACK",language:"LANGUAGE",complete:"LEVEL COMPLETE!",again:"PLAY AGAIN",menu:"MENU",paused:"PAUSED",resume:"RESUME",rotate:"Turn your phone sideways"},
@@ -1431,7 +1461,7 @@ const config={
 new Phaser.Game(config);
 
 function preload(){
-  this.load.image('bubuExact','bubu_v24.png?v=25');
+  this.load.image('bubuExact','bubu_v24.png?v=26');
 }
 
 function createTextures(scene){
@@ -1829,10 +1859,10 @@ function create(){
   playerShadow=this.add.image(220,634,'shadow').setScale(.92);
   playerShadow.setDepth(4);
 
-  player=this.physics.add.sprite(220,500,'bubuIdle').setScale(.92);
+  player=this.physics.add.sprite(220,500,'bubuExact').setScale(.115);
   player.setDepth(6);
   player.setCollideWorldBounds(true);
-  player.body.setSize(58,122).setOffset(36,38);
+  player.body.setSize(420,980).setOffset(350,285);
   this.physics.add.collider(player,platforms);
 
   quiverSprite=this.add.image(player.x-34,player.y-18,'quiverTex').setDepth(5).setScale(.78);
@@ -1891,8 +1921,8 @@ function update(time){
 
   if(quiverSprite){
     const dir=player.flipX?-1:1;
-    quiverSprite.x=player.x-dir*28;
-    quiverSprite.y=player.y-4;
+    quiverSprite.x=player.x-dir*31;
+    quiverSprite.y=player.y-3;
     quiverSprite.setFlipX(dir<0);
     quiverSprite.setVisible(player.visible);
   }
@@ -1902,7 +1932,7 @@ function update(time){
 
   if(playerShadow){
     playerShadow.x=player.x;
-    playerShadow.y=Math.min(641,player.y+78);
+    playerShadow.y=Math.min(641,player.y+82);
     const air=Math.max(0,Math.min(1,(641-playerShadow.y)/110));
     playerShadow.setScale(.82-air*.22,.82-air*.30);
     playerShadow.setAlpha(.28-air*.12);
@@ -1928,29 +1958,26 @@ function update(time){
     player.setVelocityX(0);
   }
 
-  if(!player.body.blocked.down){
-    player.setTexture("bubuJump");
-    player.setScale(.94);
-    player.setAngle(player.flipX ? -6 : 6);
-  }else if(moving){
-    if(time-bubuAnimTime>115){
-      bubuAnimTime=time;
-      bubuRunFrame=1-bubuRunFrame;
-    }
-    player.setTexture(bubuRunFrame ? "bubuRun1" : "bubuRun2");
-    player.setScale(.92);
-    player.setAngle((right?1:-1)*(bubuRunFrame ? 1.8 : -1.8));
+  // Keep the polished Bubu image stable: no rapid texture swapping,
+  // no scale pulsing and no angle wobble.
+  player.setTexture("bubuExact");
+  player.setScale(.115);
+  player.setAngle(0);
 
-    if(time-lastDust>190){
-      lastDust=time;
-      const d=sceneRef.add.circle(player.x-(right?30:-30),player.y+72,5,0xffffff,.55);
-      d.setDepth(5);
-      sceneRef.tweens.add({targets:d,x:d.x-(right?18:-18),y:d.y-8,alpha:0,scale:1.8,duration:420,onComplete:()=>d.destroy()});
-    }
-  }else{
-    player.setTexture("bubuIdle");
-    player.setAngle(Math.sin(time/300)*.6);
-    player.setScale(.92 + Math.sin(time/300)*.006);
+  if(moving && player.body.blocked.down && time-lastDust>190){
+    lastDust=time;
+    const dir=left?-1:1;
+    const d=sceneRef.add.circle(player.x-dir*22,player.y+70,5,0xffffff,.5);
+    d.setDepth(5);
+    sceneRef.tweens.add({
+      targets:d,
+      x:d.x-dir*16,
+      y:d.y-7,
+      alpha:0,
+      scale:1.6,
+      duration:360,
+      onComplete:()=>d.destroy()
+    });
   }
 
   if(Phaser.Input.Keyboard.JustDown(cursors.up)&&player.body.blocked.down)jump();
@@ -2037,26 +2064,26 @@ function attack(){
   lastAttack=now;
 
   const dir=player.flipX?-1:1;
-  const backX=player.x-dir*24;
-  const handX=player.x+dir*40;
+  const backX=player.x-dir*29;
+  const handX=player.x+dir*43;
 
   bowSprite.setData('shooting',true);
   bowSprite.setVisible(true);
   bowSprite.setFlipX(dir<0);
   bowSprite.setAngle(dir<0?180:0);
-  bowSprite.setPosition(backX,player.y-10);
+  bowSprite.setPosition(backX,player.y-8);
   bowSprite.setScale(.72);
 
   // Bow comes out from the backpack into Bubu's hands.
   sceneRef.tweens.add({
     targets:bowSprite,
     x:handX,
-    y:player.y-14,
+    y:player.y-10,
     scale:.86,
     duration:130,
     ease:'Quad.easeOut',
     onComplete:()=>{
-      const arrow=projectiles.create(handX+dir*35,player.y-14,'arrowTex').setScale(.82);
+      const arrow=projectiles.create(handX+dir*38,player.y-10,'arrowTex').setScale(.82);
       arrow.setDepth(12);
       arrow.setFlipX(dir<0);
       arrow.body.setAllowGravity(false);
@@ -2093,8 +2120,8 @@ function loseLife(){
   sceneRef.tweens.add({
     targets:player,
     alpha:.12,
-    scaleX:.085,
-    scaleY:.085,
+    scaleX:.108,
+    scaleY:.108,
     duration:170,
     yoyo:true,
     repeat:1,
@@ -2131,8 +2158,8 @@ function resetPlayer(){
   const x=Math.max(220,player.x-220);
   player.setVelocity(0,0);
   player.setPosition(x,500);
-  player.setTexture("bubuIdle");
-  player.setScale(.92);
+  player.setTexture("bubuExact");
+  player.setScale(.115);
   player.setAngle(0);
   player.setAlpha(1);
 }
@@ -2220,8 +2247,8 @@ async function startLevel(){
 
   player.setPosition(220,500);
   player.setVelocity(0,0);
-  player.setTexture("bubuIdle");
-  player.setScale(.92);
+  player.setTexture("bubuExact");
+  player.setScale(.115);
   player.setAngle(0);
   player.setVisible(true);
   if(playerShadow)playerShadow.setVisible(true);
