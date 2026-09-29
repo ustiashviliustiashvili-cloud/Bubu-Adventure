@@ -4,7 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="theme-color" content="#2aaeff">
-<title>BUBU Adventure — V5</title>
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>BUBU Adventure — V6</title>
 
 <script src="https://cdn.jsdelivr.net/npm/phaser@3.80.1/dist/phaser.min.js"></script>
 
@@ -270,6 +273,79 @@ button{font-family:inherit}
 .finishButtons button{padding:14px 20px;border:4px solid white;border-radius:20px;color:white;font-size:18px;font-weight:1000}
 .again{background:#2fbd1b}.menuBtn{background:#177bd7}
 
+
+/* ===== V6 IMMERSIVE + POLISH ===== */
+#game canvas{image-rendering:auto!important}
+.hudBox{
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+  background:linear-gradient(180deg,#0b6cbbe8,#06487edc)!important;
+  box-shadow:inset 0 3px 8px #ffffff35,0 7px 18px #003e6d55!important;
+}
+#pauseBtn,.ctrl{
+  backdrop-filter:blur(6px);
+  -webkit-backdrop-filter:blur(6px);
+}
+.ctrl{
+  position:relative;
+  overflow:hidden;
+  background:linear-gradient(180deg,#2a5d87dc,#102f4cd9)!important;
+}
+.ctrl:before{
+  content:"";
+  position:absolute;
+  left:17%;right:17%;top:10%;height:25%;
+  border-radius:50%;
+  background:#ffffff2d;
+  pointer-events:none;
+}
+#pauseBtn{
+  background:linear-gradient(180deg,#4bc4ff,#0a67cb)!important;
+  box-shadow:inset 0 4px 8px #ffffff48,0 7px 17px #003d7255;
+}
+#rotateOverlay{
+  position:fixed;
+  inset:0;
+  z-index:120;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:22px;
+  background:linear-gradient(145deg,#0b4c96f2,#23a9eaf2);
+}
+.rotateCard{
+  width:min(88vw,430px);
+  padding:30px 22px;
+  border:5px solid #fff;
+  border-radius:32px;
+  text-align:center;
+  color:#fff;
+  font-weight:1000;
+  background:#0d65b7dc;
+  box-shadow:0 18px 50px #001f4f88,inset 0 5px 12px #ffffff35;
+}
+.rotatePhone{
+  width:72px;height:124px;
+  border:7px solid white;
+  border-radius:17px;
+  margin:0 auto 20px;
+  position:relative;
+  animation:turnPhone 1.35s ease-in-out infinite alternate;
+}
+.rotatePhone:after{
+  content:"";
+  position:absolute;
+  width:22px;height:5px;
+  left:18px;bottom:7px;
+  border-radius:5px;
+  background:white;
+}
+.rotateText{font-size:23px;line-height:1.35;text-shadow:0 3px 0 #064180}
+@keyframes turnPhone{from{transform:rotate(0deg)}to{transform:rotate(90deg)}}
+@media (orientation:portrait){
+  body.game-running #controls{opacity:.18;pointer-events:none}
+}
+
 @media(max-width:700px){
   .menuContent{flex-direction:column;gap:0;padding:8px}
   .heroSide{width:100%}
@@ -447,6 +523,14 @@ button{font-family:inherit}
   </div>
 </div>
 
+<!-- ROTATE / FULLSCREEN FALLBACK -->
+<div id="rotateOverlay" class="hidden">
+  <div class="rotateCard">
+    <div class="rotatePhone"></div>
+    <div id="rotateText" class="rotateText">Turn your phone sideways</div>
+  </div>
+</div>
+
 <!-- PAUSE -->
 <div id="pauseScreen" class="hidden">
   <div class="pauseCard">
@@ -473,25 +557,25 @@ button{font-family:inherit}
 </div>
 
 <script>
-/* BUBU ADVENTURE V5 — single file build */
+/* BUBU ADVENTURE V6 — single file build */
 
 const translations={
-en:{play:"PLAY",worlds:"WORLDS",settings:"SETTINGS",selectWorld:"SELECT WORLD",candy:"Candy World",dino:"Dino Island",space:"Space World",back:"BACK",language:"LANGUAGE",complete:"LEVEL COMPLETE!",again:"PLAY AGAIN",menu:"MENU",paused:"PAUSED",resume:"RESUME"},
-ka:{play:"თამაში",worlds:"სამყაროები",settings:"პარამეტრები",selectWorld:"აირჩიე სამყარო",candy:"ტკბილეულის სამყარო",dino:"დინოზავრების კუნძული",space:"კოსმოსი",back:"უკან",language:"ენა",complete:"დონე დასრულდა!",again:"თავიდან თამაში",menu:"მენიუ",paused:"პაუზა",resume:"გაგრძელება"},
-ru:{play:"ИГРАТЬ",worlds:"МИРЫ",settings:"НАСТРОЙКИ",selectWorld:"ВЫБЕРИТЕ МИР",candy:"Мир сладостей",dino:"Остров динозавров",space:"Космос",back:"НАЗАД",language:"ЯЗЫК",complete:"УРОВЕНЬ ПРОЙДЕН!",again:"ИГРАТЬ СНОВА",menu:"МЕНЮ",paused:"ПАУЗА",resume:"ПРОДОЛЖИТЬ"},
-es:{play:"JUGAR",worlds:"MUNDOS",settings:"AJUSTES",selectWorld:"ELIGE MUNDO",candy:"Mundo Dulce",dino:"Isla Dino",space:"Espacio",back:"ATRÁS",language:"IDIOMA",complete:"¡NIVEL COMPLETADO!",again:"JUGAR DE NUEVO",menu:"MENÚ",paused:"PAUSA",resume:"CONTINUAR"},
-fr:{play:"JOUER",worlds:"MONDES",settings:"RÉGLAGES",selectWorld:"CHOISIS LE MONDE",candy:"Monde des Bonbons",dino:"Île Dino",space:"Espace",back:"RETOUR",language:"LANGUE",complete:"NIVEAU TERMINÉ !",again:"REJOUER",menu:"MENU",paused:"PAUSE",resume:"CONTINUER"},
-de:{play:"SPIELEN",worlds:"WELTEN",settings:"EINSTELLUNGEN",selectWorld:"WELT WÄHLEN",candy:"Süßigkeitenwelt",dino:"Dino-Insel",space:"Weltraum",back:"ZURÜCK",language:"SPRACHE",complete:"LEVEL GESCHAFFT!",again:"NOCHMAL",menu:"MENÜ",paused:"PAUSE",resume:"WEITER"},
-it:{play:"GIOCA",worlds:"MONDI",settings:"IMPOSTAZIONI",selectWorld:"SCEGLI MONDO",candy:"Mondo dei Dolci",dino:"Isola Dino",space:"Spazio",back:"INDIETRO",language:"LINGUA",complete:"LIVELLO COMPLETATO!",again:"GIOCA ANCORA",menu:"MENU",paused:"PAUSA",resume:"CONTINUA"},
+en:{play:"PLAY",worlds:"WORLDS",settings:"SETTINGS",selectWorld:"SELECT WORLD",candy:"Candy World",dino:"Dino Island",space:"Space World",back:"BACK",language:"LANGUAGE",complete:"LEVEL COMPLETE!",again:"PLAY AGAIN",menu:"MENU",paused:"PAUSED",resume:"RESUME",rotate:"Turn your phone sideways"},
+ka:{play:"თამაში",worlds:"სამყაროები",settings:"პარამეტრები",selectWorld:"აირჩიე სამყარო",candy:"ტკბილეულის სამყარო",dino:"დინოზავრების კუნძული",space:"კოსმოსი",back:"უკან",language:"ენა",complete:"დონე დასრულდა!",again:"თავიდან თამაში",menu:"მენიუ",paused:"პაუზა",resume:"გაგრძელება",rotate:"გადააბრუნე ტელეფონი გვერდულად"},
+ru:{play:"ИГРАТЬ",worlds:"МИРЫ",settings:"НАСТРОЙКИ",selectWorld:"ВЫБЕРИТЕ МИР",candy:"Мир сладостей",dino:"Остров динозавров",space:"Космос",back:"НАЗАД",language:"ЯЗЫК",complete:"УРОВЕНЬ ПРОЙДЕН!",again:"ИГРАТЬ СНОВА",menu:"МЕНЮ",paused:"ПАУЗА",resume:"ПРОДОЛЖИТЬ",rotate:"Поверните телефон горизонтально"},
+es:{play:"JUGAR",worlds:"MUNDOS",settings:"AJUSTES",selectWorld:"ELIGE MUNDO",candy:"Mundo Dulce",dino:"Isla Dino",space:"Espacio",back:"ATRÁS",language:"IDIOMA",complete:"¡NIVEL COMPLETADO!",again:"JUGAR DE NUEVO",menu:"MENÚ",paused:"PAUSA",resume:"CONTINUAR",rotate:"Vire o telefone na horizontal",rotate:"Gira el teléfono horizontalmente"},
+fr:{play:"JOUER",worlds:"MONDES",settings:"RÉGLAGES",selectWorld:"CHOISIS LE MONDE",candy:"Monde des Bonbons",dino:"Île Dino",space:"Espace",back:"RETOUR",language:"LANGUE",complete:"NIVEAU TERMINÉ !",again:"REJOUER",menu:"MENU",paused:"PAUSE",resume:"CONTINUER",rotate:"Tournez le téléphone à l’horizontale"},
+de:{play:"SPIELEN",worlds:"WELTEN",settings:"EINSTELLUNGEN",selectWorld:"WELT WÄHLEN",candy:"Süßigkeitenwelt",dino:"Dino-Insel",space:"Weltraum",back:"ZURÜCK",language:"SPRACHE",complete:"LEVEL GESCHAFFT!",again:"NOCHMAL",menu:"MENÜ",paused:"PAUSE",resume:"WEITER",rotate:"Drehe das Handy ins Querformat"},
+it:{play:"GIOCA",worlds:"MONDI",settings:"IMPOSTAZIONI",selectWorld:"SCEGLI MONDO",candy:"Mondo dei Dolci",dino:"Isola Dino",space:"Spazio",back:"INDIETRO",language:"LINGUA",complete:"LIVELLO COMPLETATO!",again:"GIOCA ANCORA",menu:"MENU",paused:"PAUSA",resume:"CONTINUA",rotate:"Ruota il telefono in orizzontale"},
 pt:{play:"JOGAR",worlds:"MUNDOS",settings:"CONFIGURAÇÕES",selectWorld:"ESCOLHA O MUNDO",candy:"Mundo dos Doces",dino:"Ilha Dino",space:"Espaço",back:"VOLTAR",language:"IDIOMA",complete:"NÍVEL CONCLUÍDO!",again:"JOGAR DE NOVO",menu:"MENU",paused:"PAUSA",resume:"CONTINUAR"},
-tr:{play:"OYNA",worlds:"DÜNYALAR",settings:"AYARLAR",selectWorld:"DÜNYA SEÇ",candy:"Şeker Dünyası",dino:"Dino Adası",space:"Uzay",back:"GERİ",language:"DİL",complete:"BÖLÜM TAMAMLANDI!",again:"TEKRAR OYNA",menu:"MENÜ",paused:"DURAKLATILDI",resume:"DEVAM"},
-pl:{play:"GRAJ",worlds:"ŚWIATY",settings:"USTAWIENIA",selectWorld:"WYBIERZ ŚWIAT",candy:"Kraina Słodyczy",dino:"Wyspa Dino",space:"Kosmos",back:"WRÓĆ",language:"JĘZYK",complete:"POZIOM UKOŃCZONY!",again:"ZAGRAJ PONOWNIE",menu:"MENU",paused:"PAUZA",resume:"WZNÓW"},
-uk:{play:"ГРАТИ",worlds:"СВІТИ",settings:"НАЛАШТУВАННЯ",selectWorld:"ОБЕРІТЬ СВІТ",candy:"Світ солодощів",dino:"Острів динозаврів",space:"Космос",back:"НАЗАД",language:"МОВА",complete:"РІВЕНЬ ПРОЙДЕНО!",again:"ГРАТИ ЗНОВУ",menu:"МЕНЮ",paused:"ПАУЗА",resume:"ПРОДОВЖИТИ"},
-ja:{play:"プレイ",worlds:"ワールド",settings:"設定",selectWorld:"ワールドを選択",candy:"キャンディワールド",dino:"恐竜の島",space:"宇宙",back:"戻る",language:"言語",complete:"レベルクリア！",again:"もう一度",menu:"メニュー",paused:"一時停止",resume:"続ける"},
-ko:{play:"플레이",worlds:"월드",settings:"설정",selectWorld:"월드 선택",candy:"캔디 월드",dino:"공룡 섬",space:"우주",back:"뒤로",language:"언어",complete:"레벨 완료!",again:"다시 하기",menu:"메뉴",paused:"일시정지",resume:"계속"},
-zh:{play:"开始游戏",worlds:"世界",settings:"设置",selectWorld:"选择世界",candy:"糖果世界",dino:"恐龙岛",space:"太空",back:"返回",language:"语言",complete:"关卡完成！",again:"再玩一次",menu:"菜单",paused:"暂停",resume:"继续"},
-ar:{play:"العب",worlds:"العوالم",settings:"الإعدادات",selectWorld:"اختر العالم",candy:"عالم الحلوى",dino:"جزيرة الديناصورات",space:"الفضاء",back:"رجوع",language:"اللغة",complete:"اكتمل المستوى!",again:"العب مرة أخرى",menu:"القائمة",paused:"متوقف",resume:"متابعة"},
-hi:{play:"खेलें",worlds:"दुनिया",settings:"सेटिंग्स",selectWorld:"दुनिया चुनें",candy:"कैंडी वर्ल्ड",dino:"डायनो द्वीप",space:"अंतरिक्ष",back:"वापस",language:"भाषा",complete:"लेवल पूरा!",again:"फिर खेलें",menu:"मेनू",paused:"रुका हुआ",resume:"जारी रखें"}
+tr:{play:"OYNA",worlds:"DÜNYALAR",settings:"AYARLAR",selectWorld:"DÜNYA SEÇ",candy:"Şeker Dünyası",dino:"Dino Adası",space:"Uzay",back:"GERİ",language:"DİL",complete:"BÖLÜM TAMAMLANDI!",again:"TEKRAR OYNA",menu:"MENÜ",paused:"DURAKLATILDI",resume:"DEVAM",rotate:"Telefonu yatay çevir"},
+pl:{play:"GRAJ",worlds:"ŚWIATY",settings:"USTAWIENIA",selectWorld:"WYBIERZ ŚWIAT",candy:"Kraina Słodyczy",dino:"Wyspa Dino",space:"Kosmos",back:"WRÓĆ",language:"JĘZYK",complete:"POZIOM UKOŃCZONY!",again:"ZAGRAJ PONOWNIE",menu:"MENU",paused:"PAUZA",resume:"WZNÓW",rotate:"Obróć telefon poziomo"},
+uk:{play:"ГРАТИ",worlds:"СВІТИ",settings:"НАЛАШТУВАННЯ",selectWorld:"ОБЕРІТЬ СВІТ",candy:"Світ солодощів",dino:"Острів динозаврів",space:"Космос",back:"НАЗАД",language:"МОВА",complete:"РІВЕНЬ ПРОЙДЕНО!",again:"ГРАТИ ЗНОВУ",menu:"МЕНЮ",paused:"ПАУЗА",resume:"ПРОДОВЖИТИ",rotate:"Поверніть телефон горизонтально"},
+ja:{play:"プレイ",worlds:"ワールド",settings:"設定",selectWorld:"ワールドを選択",candy:"キャンディワールド",dino:"恐竜の島",space:"宇宙",back:"戻る",language:"言語",complete:"レベルクリア！",again:"もう一度",menu:"メニュー",paused:"一時停止",resume:"続ける",rotate:"スマートフォンを横向きにしてください"},
+ko:{play:"플레이",worlds:"월드",settings:"설정",selectWorld:"월드 선택",candy:"캔디 월드",dino:"공룡 섬",space:"우주",back:"뒤로",language:"언어",complete:"레벨 완료!",again:"다시 하기",menu:"메뉴",paused:"일시정지",resume:"계속",rotate:"휴대폰을 가로로 돌려주세요"},
+zh:{play:"开始游戏",worlds:"世界",settings:"设置",selectWorld:"选择世界",candy:"糖果世界",dino:"恐龙岛",space:"太空",back:"返回",language:"语言",complete:"关卡完成！",again:"再玩一次",menu:"菜单",paused:"暂停",resume:"继续",rotate:"请将手机横向旋转"},
+ar:{play:"العب",worlds:"العوالم",settings:"الإعدادات",selectWorld:"اختر العالم",candy:"عالم الحلوى",dino:"جزيرة الديناصورات",space:"الفضاء",back:"رجوع",language:"اللغة",complete:"اكتمل المستوى!",again:"العب مرة أخرى",menu:"القائمة",paused:"متوقف",resume:"متابعة",rotate:"أدر الهاتف أفقياً"},
+hi:{play:"खेलें",worlds:"दुनिया",settings:"सेटिंग्स",selectWorld:"दुनिया चुनें",candy:"कैंडी वर्ल्ड",dino:"डायनो द्वीप",space:"अंतरिक्ष",back:"वापस",language:"भाषा",complete:"लेवल पूरा!",again:"फिर खेलें",menu:"मेनू",paused:"रुका हुआ",resume:"जारी रखें",rotate:"फोन को क्षैतिज घुमाएँ"}
 };
 
 const languageList=[
@@ -523,6 +607,7 @@ function applyLanguage(){
   pauseTitle.textContent=t.paused;
   resumeBtn.innerHTML="▶ "+t.resume;
   quitBtn.innerHTML="🏠 "+t.menu;
+  if(window.rotateText) rotateText.textContent=t.rotate || translations.en.rotate;
   buildLanguages();
 }
 
@@ -895,14 +980,34 @@ function create(){
   });
   rainbow.setScrollFactor(.35);
 
+  // foreground candy bushes and soft platform shadows
+  for(let i=0;i<18;i++){
+    const x=90+i*205;
+    const bush=this.add.circle(x,610,Phaser.Math.Between(26,44),i%3===0?0xff80c7:(i%3===1?0x8fea68:0xffcf5a),0.92);
+    bush.setScrollFactor(.88);
+    const shine=this.add.circle(x-10,598,8,0xffffff,0.28); shine.setScrollFactor(.88);
+  }
+
+  const floatLayout=[[470,525,1],[790,435,.86],[1070,530,.9],[1370,420,.82],[1650,515,.95],[1940,400,.84],[2240,500,.95],[2540,390,.85],[2850,495,.9],[3150,410,.85]];
+  floatLayout.forEach(([x,y,s])=>{
+    const sh=this.add.ellipse(x,y+58,170*s,28*s,0x4c2c37,0.18);
+    sh.setScrollFactor(1);
+  });
+
+  // drifting magic pollen
+  for(let i=0;i<28;i++){
+    const dot=this.add.circle(Phaser.Math.Between(0,3600),Phaser.Math.Between(190,590),Phaser.Math.Between(2,4),i%2?0xffffff:0xfff2a0,0.45);
+    dot.setScrollFactor(.72);
+    this.tweens.add({targets:dot,y:dot.y-Phaser.Math.Between(18,45),x:dot.x+Phaser.Math.Between(-12,18),alpha:0.12,duration:2200+Math.random()*2500,yoyo:true,repeat:-1,ease:'Sine.easeInOut'});
+  }
+
   // ground and platforms
   platforms=this.physics.add.staticGroup();
   for(let x=130;x<3600;x+=250){
     const p=platforms.create(x,675,'ground');
     p.refreshBody();
   }
-  const floats=[[470,525,1],[790,435,.86],[1070,530,.9],[1370,420,.82],[1650,515,.95],[1940,400,.84],[2240,500,.95],[2540,390,.85],[2850,495,.9],[3150,410,.85]];
-  floats.forEach(([x,y,s])=>{
+  floatLayout.forEach(([x,y,s])=>{
     const p=platforms.create(x,y,'platform');
     p.setScale(s);
     p.refreshBody();
@@ -1056,9 +1161,64 @@ function resetPlayer(){
   player.setTexture("bubuIdle");
   player.setAngle(0);
 }
-function startLevel(){
+async function enterImmersiveGame(){
+  document.body.classList.add('game-running');
+
+  // Android/Chromium: fullscreen first, then lock to landscape.
+  try{
+    const el=document.documentElement;
+    if(!document.fullscreenElement){
+      if(el.requestFullscreen){
+        await el.requestFullscreen({navigationUI:'hide'});
+      }else if(el.webkitRequestFullscreen){
+        el.webkitRequestFullscreen();
+      }
+    }
+  }catch(e){}
+
+  try{
+    if(screen.orientation && screen.orientation.lock){
+      await screen.orientation.lock('landscape');
+    }
+  }catch(e){}
+
+  setTimeout(()=>{
+    try{ window.scrollTo(0,1); }catch(e){}
+    syncOrientationOverlay();
+    if(sceneRef && sceneRef.scale) sceneRef.scale.refresh();
+  },180);
+}
+
+async function leaveImmersiveGame(){
+  document.body.classList.remove('game-running');
+  rotateOverlay.classList.add('hidden');
+  try{ if(screen.orientation && screen.orientation.unlock) screen.orientation.unlock(); }catch(e){}
+  try{
+    if(document.fullscreenElement && document.exitFullscreen) await document.exitFullscreen();
+    else if(document.webkitFullscreenElement && document.webkitExitFullscreen) document.webkitExitFullscreen();
+  }catch(e){}
+}
+
+function syncOrientationOverlay(){
+  const portrait=window.innerHeight>window.innerWidth;
+  if(gameActive && portrait){
+    rotateOverlay.classList.remove('hidden');
+  }else{
+    rotateOverlay.classList.add('hidden');
+  }
+}
+
+window.addEventListener('resize',()=>{
+  syncOrientationOverlay();
+  if(sceneRef && sceneRef.scale) setTimeout(()=>sceneRef.scale.refresh(),80);
+});
+window.addEventListener('orientationchange',()=>setTimeout(syncOrientationOverlay,180));
+document.addEventListener('fullscreenchange',()=>setTimeout(syncOrientationOverlay,80));
+
+async function startLevel(){
   if(starting)return;
   starting=true;
+  await enterImmersiveGame();
   coinScore=0;starScore=0;
   coinCount.textContent="0";starCount.textContent="0";
   menu.classList.add("hidden");
@@ -1086,6 +1246,7 @@ function startLevel(){
   if(playerShadow)playerShadow.setVisible(true);
   player.body.enable=true;
   gameActive=true;
+  syncOrientationOverlay();
   sceneRef.physics.resume();
   setTimeout(()=>starting=false,250);
 }
@@ -1103,8 +1264,9 @@ function finishLevel(){
   pauseBtn.classList.add("hidden");
   finishScreen.classList.remove("hidden");
 }
-function goMenu(){
+async function goMenu(){
   gameActive=false;
+  await leaveImmersiveGame();
   if(sceneRef)sceneRef.physics.pause();
   hud.classList.add("hidden");
   controls.classList.add("hidden");
