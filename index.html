@@ -7,7 +7,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>BUBU Adventure — V19</title>
+<title>BUBU Adventure — V20</title>
 
 <script src="https://cdn.jsdelivr.net/npm/phaser@3.80.1/dist/phaser.min.js"></script>
 
@@ -639,6 +639,88 @@ button{font-family:inherit}
 .playerHit{animation:bubuHit .12s linear 5}
 @keyframes bubuHit{0%,100%{opacity:1}50%{opacity:.18}}
 
+
+/* ===== V20 FULL-WIDTH GAMEPLAY + COMPACT CONTROLS ===== */
+body.game-running #game{
+  inset:0!important;
+  width:100vw!important;
+  height:100vh!important;
+  overflow:hidden!important;
+  background:#46beff!important;
+}
+body.game-running #game canvas{
+  position:fixed!important;
+  inset:0!important;
+  width:100vw!important;
+  height:100vh!important;
+  max-width:none!important;
+  max-height:none!important;
+  margin:0!important;
+  transform:none!important;
+}
+
+/* smaller gameplay HUD */
+body.game-running #hud{
+  left:8px!important;
+  top:8px!important;
+  gap:7px!important;
+}
+body.game-running .hudBox{
+  min-width:72px!important;
+  padding:6px 10px!important;
+  border-width:3px!important;
+  border-radius:17px!important;
+  font-size:18px!important;
+}
+
+/* smaller pause */
+body.game-running #pauseBtn{
+  right:9px!important;
+  top:8px!important;
+  width:50px!important;
+  height:50px!important;
+  border-width:4px!important;
+  border-radius:16px!important;
+  font-size:23px!important;
+}
+
+/* smaller movement / jump / attack buttons */
+body.game-running #controls{
+  bottom:max(8px,env(safe-area-inset-bottom))!important;
+  padding:0 12px!important;
+}
+body.game-running .controlSide{
+  gap:8px!important;
+}
+body.game-running .ctrl{
+  width:62px!important;
+  height:62px!important;
+  border-width:4px!important;
+  font-size:29px!important;
+  box-shadow:inset 0 4px 8px #ffffff2a,0 5px 10px #0004!important;
+}
+body.game-running .attackCtrl{
+  font-size:27px!important;
+}
+
+@media (orientation:landscape) and (max-height:500px){
+  body.game-running .ctrl{
+    width:56px!important;
+    height:56px!important;
+    font-size:26px!important;
+  }
+  body.game-running .hudBox{
+    min-width:66px!important;
+    padding:5px 8px!important;
+    font-size:16px!important;
+  }
+  body.game-running #pauseBtn{
+    width:46px!important;
+    height:46px!important;
+    font-size:21px!important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -848,7 +930,7 @@ button{font-family:inherit}
 </div>
 
 <script>
-/* BUBU ADVENTURE V19 — single file build */
+/* BUBU ADVENTURE V20 — single file build */
 
 const translations={
 en:{play:"PLAY",worlds:"WORLDS",settings:"SETTINGS",selectWorld:"SELECT WORLD",candy:"Candy World",dino:"Dino Island",space:"Space World",back:"BACK",language:"LANGUAGE",complete:"LEVEL COMPLETE!",again:"PLAY AGAIN",menu:"MENU",paused:"PAUSED",resume:"RESUME",rotate:"Turn your phone sideways"},
@@ -1458,10 +1540,10 @@ function create(){
     p.refreshBody();
   });
 
-  playerShadow=this.add.image(145,634,'shadow').setScale(.82);
+  playerShadow=this.add.image(220,634,'shadow').setScale(.92);
   playerShadow.setDepth(4);
 
-  player=this.physics.add.sprite(145,510,'bubuExact').setScale(.11);
+  player=this.physics.add.sprite(220,500,'bubuExact').setScale(.13);
   player.setDepth(6);
   player.setCollideWorldBounds(true);
   player.body.setSize(500,1050).setOffset(310,230);
@@ -1520,7 +1602,7 @@ function update(time){
 
   if(playerShadow){
     playerShadow.x=player.x;
-    playerShadow.y=Math.min(641,player.y+93);
+    playerShadow.y=Math.min(641,player.y+105);
     const air=Math.max(0,Math.min(1,(641-playerShadow.y)/110));
     playerShadow.setScale(.82-air*.22,.82-air*.30);
     playerShadow.setAlpha(.28-air*.12);
@@ -1548,7 +1630,7 @@ function update(time){
 
   if(!player.body.blocked.down){
     player.setTexture("bubuExact");
-    player.setScale(.112);
+    player.setScale(.132);
     player.setAngle(player.flipX ? -7 : 7);
   }else if(moving){
     if(time-bubuAnimTime>115){
@@ -1556,19 +1638,19 @@ function update(time){
       bubuRunFrame=1-bubuRunFrame;
     }
     player.setTexture("bubuExact");
-    player.setScale(bubuRunFrame ? .112 : .108);
+    player.setScale(bubuRunFrame ? .133 : .127);
     player.setAngle((right?1:-1)*(bubuRunFrame ? 2.3 : -2.3));
 
     if(time-lastDust>190){
       lastDust=time;
-      const d=sceneRef.add.circle(player.x-(right?32:-32),player.y+72,5,0xffffff,.55);
+      const d=sceneRef.add.circle(player.x-(right?32:-32),player.y+88,5,0xffffff,.55);
       d.setDepth(5);
       sceneRef.tweens.add({targets:d,x:d.x-(right?18:-18),y:d.y-8,alpha:0,scale:1.8,duration:420,onComplete:()=>d.destroy()});
     }
   }else{
     player.setTexture("bubuExact");
     player.setAngle(Math.sin(time/300)*.7);
-    player.setScale(.11 + Math.sin(time/300)*.0015);
+    player.setScale(.13 + Math.sin(time/300)*.002);
   }
 
   if(Phaser.Input.Keyboard.JustDown(cursors.up)&&player.body.blocked.down)jump();
@@ -1708,11 +1790,11 @@ function showGameOver(){
   gameOverScreen.classList.remove("hidden");
 }
 function resetPlayer(){
-  const x=Math.max(145,player.x-220);
+  const x=Math.max(220,player.x-220);
   player.setVelocity(0,0);
   player.setPosition(x,500);
   player.setTexture("bubuExact");
-  player.setScale(.11);
+  player.setScale(.13);
   player.setAngle(0);
   player.setAlpha(1);
 }
@@ -1798,10 +1880,10 @@ async function startLevel(){
     setTimeout(()=>levelIntro.classList.add('hidden'),350);
   },1700);
 
-  player.setPosition(145,510);
+  player.setPosition(220,500);
   player.setVelocity(0,0);
   player.setTexture("bubuExact");
-  player.setScale(.11);
+  player.setScale(.13);
   player.setAngle(0);
   player.setVisible(true);
   if(playerShadow)playerShadow.setVisible(true);
