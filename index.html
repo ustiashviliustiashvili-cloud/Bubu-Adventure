@@ -7,7 +7,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>BUBU Adventure — V7</title>
+<title>BUBU Adventure — V8 + New Bubu</title>
 
 <script src="https://cdn.jsdelivr.net/npm/phaser@3.80.1/dist/phaser.min.js"></script>
 
@@ -488,6 +488,124 @@ button{font-family:inherit}
 @media (max-width:390px){
   .v7Hub{padding-left:61px}.v7SideRail{left:5px}.v7SideBtn{width:48px;min-height:50px}.v7SideBtn b{font-size:22px}.v7Top{grid-template-columns:minmax(0,1.75fr) minmax(92px,.7fr);min-height:445px}.v7HeroStage{min-height:445px}.v7HeroArt{height:270px}.v7WorldPreview{height:285px;margin-top:86px}.v7Logo{font-size:50px}.v7SubLogo{font-size:23px}.customBody{grid-template-columns:92px 78px 1fr;gap:5px;padding:7px}.customPreview{min-height:190px}.miniBubuFace{transform:scale(.88)}.catBtn{height:34px;padding:0 4px}.catBtn span{font-size:8px}.customGrid{gap:5px}.customItem{min-height:82px}.customItem .thumb{font-size:30px}.characterRow{gap:5px;padding:7px}.charPortrait{height:62px;font-size:32px}}
 
+
+/* ===== V8 WORLD SELECT COMPACT ===== */
+#candyWorld{cursor:pointer}
+.enterBadge{
+  position:absolute;
+  left:50%;
+  top:43%;
+  transform:translate(-50%,-50%);
+  z-index:8;
+  width:68px;
+  height:68px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding-left:5px;
+  color:white;
+  font-size:34px;
+  font-weight:1000;
+  background:linear-gradient(#78ef3d,#24ac14);
+  border:5px solid white;
+  box-shadow:0 6px 0 #157a0d,0 10px 24px #0005,inset 0 5px 8px #ffffff66;
+  pointer-events:none;
+}
+#candyWorld:active{transform:scale(.98)}
+
+@media (orientation:landscape) and (max-height:700px){
+  .worldWrap{
+    justify-content:center;
+    padding:6px 12px 8px;
+  }
+  .title{
+    font-size:clamp(25px,4.2vw,44px);
+    -webkit-text-stroke:3px #173f9d;
+    text-shadow:0 4px 0 #de6000;
+    margin:0 0 9px;
+    line-height:1;
+  }
+  .cards{
+    width:min(980px,88vw);
+    gap:13px;
+  }
+  .card{
+    height:min(54vh,285px);
+    border-width:5px;
+    border-radius:25px;
+    box-shadow:0 7px 0 #14639c,0 12px 20px #0003;
+  }
+  .pic{height:70%}
+  .pic.candy:before,.pic.candy:after,.pic.dino:after,.pic.space:after{
+    font-size:clamp(48px,9vh,76px);
+  }
+  .worldName{font-size:clamp(17px,2.5vw,25px)}
+  .worldStars{font-size:16px;margin-top:2px}
+  .lock{font-size:52px}
+  .backBtn{
+    margin-top:10px;
+    width:170px;
+    height:46px;
+    border-width:4px;
+    border-radius:20px;
+    font-size:18px;
+    box-shadow:0 5px 0 #08478e;
+  }
+  .enterBadge{
+    width:54px;
+    height:54px;
+    font-size:27px;
+    border-width:4px;
+    box-shadow:0 5px 0 #157a0d,0 8px 18px #0004,inset 0 4px 7px #ffffff66;
+  }
+}
+
+
+/* ===== EXACT BUBU IMAGE — V8 BASE UNCHANGED ===== */
+.exactBubuImg{
+  display:block;
+  object-fit:contain;
+  user-select:none;
+  -webkit-user-drag:none;
+  pointer-events:none;
+}
+.v7HeroArt{
+  display:flex;
+  align-items:flex-end;
+  justify-content:center;
+}
+.v7HeroArt .exactBubuImg{
+  width:auto;
+  height:100%;
+  max-width:100%;
+  filter:drop-shadow(0 14px 12px rgba(20,70,100,.22));
+}
+.customPreview{
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+}
+.customPreview .exactBubuImg{
+  height:175px;
+  width:auto;
+  max-width:95%;
+}
+.bubuPortrait:before,
+.bubuPortrait:after,
+.bubuPortrait span{
+  display:none!important;
+}
+.bubuPortrait .exactBubuImg{
+  width:auto;
+  height:82px;
+  max-width:100%;
+  transform:translateY(8px);
+}
+
 </style>
 </head>
 <body>
@@ -521,99 +639,7 @@ button{font-family:inherit}
         </div>
 
         <div class="v7HeroArt" aria-label="Bubu">
-          <div id="heroHatBadge" class="heroHatBadge"></div>
-          <svg viewBox="0 0 270 330" class="heroSvg" role="img" aria-label="Bubu character">
-            <defs>
-              <linearGradient id="skinG" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0" stop-color="#ffe1c4"/><stop offset="0.55" stop-color="#ffc79d"/><stop offset="1" stop-color="#f3a77d"/>
-              </linearGradient>
-              <linearGradient id="hairG" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0" stop-color="#7b4026"/><stop offset="0.55" stop-color="#572615"/><stop offset="1" stop-color="#351309"/>
-              </linearGradient>
-              <linearGradient id="capG" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0" class="capLight" stop-color="var(--cap-light,#ff665e)"/><stop offset="1" class="capMain" stop-color="var(--cap-main,#e92f2b)"/>
-              </linearGradient>
-              <linearGradient id="hoodG" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0" stop-color="var(--hoodie-light,#ff5b54)"/><stop offset="1" stop-color="var(--hoodie-main,#e9312d)"/>
-              </linearGradient>
-              <linearGradient id="jeanG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2f8ddd"/><stop offset="1" stop-color="#145ea6"/></linearGradient>
-              <linearGradient id="bagG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--bag-light,#4eb7ff)"/><stop offset="1" stop-color="var(--bag-main,#1176c7)"/></linearGradient>
-              <filter id="heroShadow" x="-30%" y="-30%" width="160%" height="180%"><feDropShadow dx="0" dy="9" stdDeviation="7" flood-color="#23566c" flood-opacity=".35"/></filter>
-              <filter id="softGlow"><feGaussianBlur stdDeviation="1.2"/></filter>
-            </defs>
-            <g filter="url(#heroShadow)" transform="translate(2 0)">
-              <!-- backpack -->
-              <path d="M62 167 C38 168 25 190 30 224 L45 264 C52 278 78 275 88 259 L93 191 C92 177 81 168 62 167Z" fill="url(#bagG)" stroke="#07549a" stroke-width="7"/>
-              <path d="M41 190 C57 178 78 180 90 195" fill="none" stroke="#77c9ff" stroke-width="7" stroke-linecap="round" opacity=".85"/>
-              <!-- rear arm -->
-              <path d="M94 187 C68 194 55 213 49 231" fill="none" stroke="url(#hoodG)" stroke-width="27" stroke-linecap="round"/>
-              <circle cx="48" cy="235" r="16" fill="url(#skinG)" stroke="#9b5538" stroke-width="5"/>
-              <!-- raised leg -->
-              <path d="M123 250 C102 260 88 279 83 300" fill="none" stroke="url(#jeanG)" stroke-width="31" stroke-linecap="round"/>
-              <path d="M76 294 C58 294 43 304 46 316 C50 327 77 329 100 321 L105 308 C96 300 87 296 76 294Z" fill="#fff" stroke="var(--shoe-accent,#d92d29)" stroke-width="8"/>
-              <path d="M54 310 L94 314" stroke="var(--shoe-accent,#d92d29)" stroke-width="7" stroke-linecap="round"/>
-              <!-- body -->
-              <path d="M100 165 C119 151 157 150 177 163 C188 175 190 215 181 249 C159 265 119 265 98 246 C91 215 91 181 100 165Z" fill="url(#hoodG)" stroke="#a51c19" stroke-width="7"/>
-              <path d="M119 181 C135 173 157 174 172 183" fill="none" stroke="#ff8077" stroke-width="7" stroke-linecap="round" opacity=".8"/>
-              <path d="M119 229 Q140 242 164 229" fill="none" stroke="#bb211e" stroke-width="5" stroke-linecap="round"/>
-              <path d="M138 183 l7 14 16 2-12 11 4 16-15-8-14 8 4-16-12-11 16-2z" fill="#ffd92d" stroke="#e6a900" stroke-width="3"/>
-              <!-- forward arm -->
-              <path d="M173 181 C201 184 219 170 230 154" fill="none" stroke="url(#hoodG)" stroke-width="27" stroke-linecap="round"/>
-              <circle cx="234" cy="149" r="16" fill="url(#skinG)" stroke="#9b5538" stroke-width="5"/>
-              <path d="M240 146 q10 -9 15 -1" fill="none" stroke="#9b5538" stroke-width="4" stroke-linecap="round"/>
-              <!-- standing leg -->
-              <path d="M161 248 C174 267 181 286 179 309" fill="none" stroke="url(#jeanG)" stroke-width="31" stroke-linecap="round"/>
-              <path d="M166 300 C181 299 197 306 204 318 C199 330 168 333 146 326 L143 313 C148 307 156 302 166 300Z" fill="#fff" stroke="var(--shoe-accent,#d92d29)" stroke-width="8"/>
-              <path d="M153 315 L195 319" stroke="var(--shoe-accent,#d92d29)" stroke-width="7" stroke-linecap="round"/>
-              <!-- neck -->
-              <rect x="126" y="145" width="37" height="33" rx="15" fill="url(#skinG)" stroke="#9b5538" stroke-width="5"/>
-              <!-- ears -->
-              <circle cx="93" cy="99" r="25" fill="url(#skinG)" stroke="#87432d" stroke-width="6"/>
-              <circle cx="188" cy="99" r="25" fill="url(#skinG)" stroke="#87432d" stroke-width="6"/>
-              <path d="M87 98 q8 -9 15 0" fill="none" stroke="#e89b79" stroke-width="5" stroke-linecap="round"/>
-              <path d="M181 98 q8 -9 15 0" fill="none" stroke="#e89b79" stroke-width="5" stroke-linecap="round"/>
-              <!-- head -->
-              <ellipse cx="141" cy="100" rx="69" ry="73" fill="url(#skinG)" stroke="#87432d" stroke-width="7"/>
-              <!-- hair -->
-              <path d="M79 94 C70 51 96 23 132 18 C171 11 202 34 207 68 C196 54 183 52 170 55 C159 34 143 31 132 46 C119 31 100 38 98 57 C87 61 81 75 79 94Z" fill="url(#hairG)"/>
-              <path d="M93 61 C103 35 126 34 134 55 C142 33 165 36 170 58 C180 46 195 52 200 68 C180 63 161 69 146 80 C130 66 110 62 93 61Z" fill="#6a321e"/>
-              <ellipse cx="106" cy="47" rx="15" ry="10" fill="#8d4b2c" opacity=".8" transform="rotate(-20 106 47)"/>
-              <!-- cap -->
-              <path d="M89 45 C98 17 120 7 151 8 C178 8 198 20 204 47 C170 38 129 38 89 45Z" fill="url(#capG)" stroke="#a81e1b" stroke-width="7"/>
-              <path d="M172 42 C202 40 226 47 236 57 C217 66 193 65 169 59Z" fill="var(--cap-main,#e92f2b)" stroke="#a81e1b" stroke-width="7"/>
-              <ellipse cx="116" cy="25" rx="21" ry="7" fill="#ff8c83" opacity=".55" transform="rotate(-10 116 25)"/>
-              <path d="M148 20 l5 10 11 2-8 8 2 11-10-5-10 5 2-11-8-8 11-2z" fill="#ffd92d" stroke="#e6a900" stroke-width="2.5"/>
-              <!-- eyebrows -->
-              <path d="M108 88 Q119 80 130 86" fill="none" stroke="#5b2a1a" stroke-width="6" stroke-linecap="round"/>
-              <path d="M153 86 Q165 80 177 88" fill="none" stroke="#5b2a1a" stroke-width="6" stroke-linecap="round"/>
-              <!-- eyes -->
-              <ellipse cx="119" cy="105" rx="20" ry="25" fill="#fff" stroke="#6f3825" stroke-width="4"/>
-              <ellipse cx="164" cy="105" rx="20" ry="25" fill="#fff" stroke="#6f3825" stroke-width="4"/>
-              <ellipse cx="122" cy="108" rx="11" ry="16" fill="#2e6594"/>
-              <ellipse cx="161" cy="108" rx="11" ry="16" fill="#2e6594"/>
-              <ellipse cx="123" cy="111" rx="7" ry="11" fill="#111820"/>
-              <ellipse cx="160" cy="111" rx="7" ry="11" fill="#111820"/>
-              <circle cx="127" cy="102" r="4.5" fill="#fff"/><circle cx="164" cy="102" r="4.5" fill="#fff"/>
-              <circle cx="117" cy="114" r="2.5" fill="#8fd0ff"/><circle cx="155" cy="114" r="2.5" fill="#8fd0ff"/>
-              <!-- cheeks/nose -->
-              <ellipse cx="101" cy="130" rx="15" ry="7" fill="#ff8e88" opacity=".38"/>
-              <ellipse cx="180" cy="130" rx="15" ry="7" fill="#ff8e88" opacity=".38"/>
-              <ellipse cx="142" cy="126" rx="8" ry="5" fill="#efa07f"/>
-              <!-- smile -->
-              <path d="M119 136 Q141 157 165 136 Q159 166 140 167 Q122 164 119 136Z" fill="#7f231d" stroke="#6a1b16" stroke-width="3"/>
-              <path d="M126 140 Q142 148 158 140" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round"/>
-              <path d="M132 158 Q143 151 153 158" fill="none" stroke="#ff7075" stroke-width="6" stroke-linecap="round"/>
-              <!-- nose shine / face highlight -->
-              <ellipse cx="105" cy="76" rx="22" ry="11" fill="#fff" opacity=".10" transform="rotate(-25 105 76)"/>
-              <!-- glasses optional -->
-              <g id="heroGlasses" class="heroGlasses">
-                <circle cx="119" cy="105" r="25" fill="none" stroke="#1a2b44" stroke-width="7"/>
-                <circle cx="164" cy="105" r="25" fill="none" stroke="#1a2b44" stroke-width="7"/>
-                <path d="M143 104 L140 104" stroke="#1a2b44" stroke-width="7" stroke-linecap="round"/>
-                <path d="M94 101 L80 95 M189 101 L202 94" stroke="#1a2b44" stroke-width="6" stroke-linecap="round"/>
-              </g>
-            </g>
-          </svg>
+          <img class="exactBubuImg" src="bubu.png?v=1" alt="Bubu">
         </div>
 
         <button id="playBtn" class="v7PlayBtn"><span class="playTriangle">▶</span><span id="playLabel">PLAY</span></button>
@@ -643,9 +669,7 @@ button{font-family:inherit}
       </header>
       <div class="customBody">
         <div class="customPreview">
-          <div class="miniBubuFace">
-            <div class="miniHair"></div><div class="miniCap"></div><div class="miniEye e1"></div><div class="miniEye e2"></div><div class="miniSmile"></div>
-          </div>
+          <img class="exactBubuImg" src="bubu.png?v=1" alt="Bubu">
           <div id="customPreviewLabel" class="previewLabel">Bubu</div>
         </div>
         <nav id="categoryList" class="categoryList">
@@ -666,7 +690,7 @@ button{font-family:inherit}
         <div></div>
       </header>
       <div class="characterRow">
-        <button class="charCard active"><div class="charPortrait bubuPortrait"><span>★</span></div><b>Bubu</b><em>✓</em></button>
+        <button class="charCard active"><div class="charPortrait bubuPortrait"><img class="exactBubuImg" src="bubu.png?v=1" alt="Bubu"></div><b>Bubu</b><em>✓</em></button>
         <button class="charCard lockedChar" data-name="Kiki"><div class="charPortrait kikiPortrait">🎀</div><b>Kiki</b><em>🔒</em></button>
         <button class="charCard lockedChar" data-name="Momo"><div class="charPortrait momoPortrait">🐼</div><b>Momo</b><em>🔒</em></button>
         <button class="charCard lockedChar" data-name="Toto"><div class="charPortrait totoPortrait">🦖</div><b>Toto</b><em>🔒</em></button>
@@ -685,6 +709,7 @@ button{font-family:inherit}
     <div class="cards">
       <div id="candyWorld" class="card">
         <div class="pic candy"></div>
+        <div class="enterBadge">▶</div>
         <div class="cardBottom pink">
           <div id="candyName" class="worldName">Candy World</div>
           <div class="worldStars">⭐ 0 / 60</div>
@@ -775,7 +800,7 @@ button{font-family:inherit}
 </div>
 
 <script>
-/* BUBU ADVENTURE V7 — single file build */
+/* BUBU ADVENTURE V8 + NEW BUBU — single file build */
 
 const translations={
 en:{play:"PLAY",worlds:"WORLDS",settings:"SETTINGS",selectWorld:"SELECT WORLD",candy:"Candy World",dino:"Dino Island",space:"Space World",back:"BACK",language:"LANGUAGE",complete:"LEVEL COMPLETE!",again:"PLAY AGAIN",menu:"MENU",paused:"PAUSED",resume:"RESUME",rotate:"Turn your phone sideways"},
@@ -1003,7 +1028,9 @@ const config={
 };
 new Phaser.Game(config);
 
-function preload(){}
+function preload(){
+  this.load.image('bubuExact','bubu.png?v=1');
+}
 
 function createTextures(scene){
   const g=scene.add.graphics();
@@ -1370,10 +1397,10 @@ function create(){
   playerShadow=this.add.image(145,634,'shadow').setScale(.82);
   playerShadow.setDepth(4);
 
-  player=this.physics.add.sprite(145,510,'bubuIdle').setScale(.80);
+  player=this.physics.add.sprite(145,510,'bubuExact').setScale(.11);
   player.setDepth(6);
   player.setCollideWorldBounds(true);
-  player.body.setSize(66,126).setOffset(31,30);
+  player.body.setSize(500,1050).setOffset(310,230);
   this.physics.add.collider(player,platforms);
 
   // coins
@@ -1452,26 +1479,28 @@ function update(time){
   }
 
   if(!player.body.blocked.down){
-    if(player.texture.key!=="bubuJump")player.setTexture("bubuJump");
-    player.setAngle(player.body.velocity.x*0.012);
+    player.setTexture("bubuExact");
+    player.setScale(.112);
+    player.setAngle(player.flipX ? -7 : 7);
   }else if(moving){
-    if(time-bubuAnimTime>105){
+    if(time-bubuAnimTime>115){
       bubuAnimTime=time;
       bubuRunFrame=1-bubuRunFrame;
-      player.setTexture(bubuRunFrame?"bubuRun1":"bubuRun2");
     }
-    player.setAngle((right?1:-1)*2.2);
+    player.setTexture("bubuExact");
+    player.setScale(bubuRunFrame ? .112 : .108);
+    player.setAngle((right?1:-1)*(bubuRunFrame ? 2.3 : -2.3));
 
     if(time-lastDust>190){
       lastDust=time;
-      const d=sceneRef.add.circle(player.x-(right?35:-35),player.y+72,5,0xffffff,.55);
+      const d=sceneRef.add.circle(player.x-(right?32:-32),player.y+72,5,0xffffff,.55);
       d.setDepth(5);
       sceneRef.tweens.add({targets:d,x:d.x-(right?18:-18),y:d.y-8,alpha:0,scale:1.8,duration:420,onComplete:()=>d.destroy()});
     }
   }else{
-    if(player.texture.key!=="bubuIdle")player.setTexture("bubuIdle");
+    player.setTexture("bubuExact");
     player.setAngle(Math.sin(time/300)*.7);
-    player.setScale(.80, .80 + Math.sin(time/300)*.006);
+    player.setScale(.11 + Math.sin(time/300)*.0015);
   }
 
   if(Phaser.Input.Keyboard.JustDown(cursors.up)&&player.body.blocked.down)jump();
@@ -1512,7 +1541,8 @@ function resetPlayer(){
   const x=Math.max(145,player.x-180);
   player.setVelocity(0,0);
   player.setPosition(x,500);
-  player.setTexture("bubuIdle");
+  player.setTexture("bubuExact");
+  player.setScale(.11);
   player.setAngle(0);
 }
 async function enterImmersiveGame(){
@@ -1572,7 +1602,11 @@ document.addEventListener('fullscreenchange',()=>setTimeout(syncOrientationOverl
 async function startLevel(){
   if(starting)return;
   starting=true;
-  await enterImmersiveGame();
+
+  // Start fullscreen/landscape from the user tap, but do not hold the game
+  // on the world-selection screen while the browser changes mode.
+  const immersivePromise=enterImmersiveGame();
+
   coinScore=0;starScore=0;
   coinCount.textContent="0";starCount.textContent="0";
   menu.classList.add("hidden");
@@ -1594,7 +1628,8 @@ async function startLevel(){
 
   player.setPosition(145,510);
   player.setVelocity(0,0);
-  player.setTexture("bubuIdle");
+  player.setTexture("bubuExact");
+  player.setScale(.11);
   player.setAngle(0);
   player.setVisible(true);
   if(playerShadow)playerShadow.setVisible(true);
@@ -1602,6 +1637,12 @@ async function startLevel(){
   gameActive=true;
   syncOrientationOverlay();
   sceneRef.physics.resume();
+
+  immersivePromise.finally(()=>{
+    syncOrientationOverlay();
+    if(sceneRef && sceneRef.scale) sceneRef.scale.refresh();
+  });
+
   setTimeout(()=>starting=false,250);
 }
 function finishLevel(){
