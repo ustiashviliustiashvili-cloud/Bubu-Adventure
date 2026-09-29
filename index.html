@@ -1,0 +1,1534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>BUBU Adventure</title>
+
+<script src="https://cdn.jsdelivr.net/npm/phaser@3.80.1/dist/phaser.min.js"></script>
+
+<style>
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
+
+html,body{
+  width:100%;
+  height:100%;
+  margin:0;
+  overflow:hidden;
+  font-family:Arial,sans-serif;
+  background:#1598ff;
+}
+
+#game{
+  position:fixed;
+  inset:0;
+}
+
+.screen{
+  position:fixed;
+  inset:0;
+  z-index:20;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  background:
+    radial-gradient(circle at 15% 25%,#ffd8f0 0 8%,transparent 9%),
+    radial-gradient(circle at 85% 20%,#fff0a8 0 8%,transparent 9%),
+    linear-gradient(#42b8ff,#8ee7ff);
+}
+
+.hidden{
+  display:none !important;
+}
+
+.logo{
+  font-size:clamp(42px,12vw,88px);
+  font-weight:1000;
+  color:#ffad16;
+  text-shadow:
+    0 5px 0 #be5b00,
+    0 8px 0 white,
+    0 11px 0 #1459b5;
+  margin-bottom:5px;
+  text-align:center;
+}
+
+.subtitle{
+  font-size:clamp(22px,6vw,42px);
+  color:white;
+  font-weight:900;
+  text-shadow:0 4px 0 #1760b3;
+  margin-bottom:35px;
+}
+
+.bubuPreview{
+  width:130px;
+  height:160px;
+  position:relative;
+  margin-bottom:15px;
+}
+
+.head{
+  position:absolute;
+  width:78px;
+  height:78px;
+  background:#ffd0a7;
+  border-radius:50%;
+  left:26px;
+  top:12px;
+  border:4px solid #6c351f;
+}
+
+.hair{
+  position:absolute;
+  width:70px;
+  height:30px;
+  background:#6a341c;
+  border-radius:50% 50% 35% 35%;
+  left:30px;
+  top:7px;
+}
+
+.cap{
+  position:absolute;
+  width:72px;
+  height:27px;
+  border-radius:40px 40px 8px 8px;
+  background:#f44336;
+  left:29px;
+  top:0;
+}
+
+.cap:after{
+  content:"⭐";
+  position:absolute;
+  left:26px;
+  top:1px;
+  font-size:18px;
+}
+
+.body{
+  position:absolute;
+  width:70px;
+  height:72px;
+  background:#f44336;
+  border-radius:20px;
+  left:30px;
+  top:82px;
+  border:4px solid #a52820;
+}
+
+.eye1,.eye2{
+  position:absolute;
+  width:9px;
+  height:14px;
+  background:#222;
+  border-radius:50%;
+  top:43px;
+}
+
+.eye1{left:47px}
+.eye2{left:76px}
+
+.smile{
+  position:absolute;
+  width:25px;
+  height:12px;
+  border-bottom:4px solid #9c321f;
+  border-radius:50%;
+  top:61px;
+  left:53px;
+}
+
+.btn{
+  border:none;
+  min-width:230px;
+  padding:16px 30px;
+  margin:8px;
+  border-radius:22px;
+  font-size:25px;
+  font-weight:900;
+  color:white;
+  background:linear-gradient(#67e334,#2aad17);
+  box-shadow:
+    0 7px 0 #147f0a,
+    0 10px 20px #0003;
+}
+
+.btn:active{
+  transform:translateY(5px);
+  box-shadow:0 2px 0 #147f0a;
+}
+
+.smallBtn{
+  min-width:180px;
+  font-size:18px;
+  padding:12px 18px;
+  background:linear-gradient(#48aaff,#1769d4);
+  box-shadow:0 6px 0 #0b459c;
+}
+
+#languageBox{
+  position:absolute;
+  top:14px;
+  right:14px;
+}
+
+select{
+  font-size:17px;
+  padding:10px;
+  border-radius:14px;
+  border:3px solid white;
+  background:#1769d4;
+  color:white;
+  font-weight:bold;
+}
+
+#hud{
+  position:fixed;
+  left:12px;
+  top:10px;
+  z-index:10;
+  display:flex;
+  gap:10px;
+}
+
+.hudBox{
+  background:#074b83dd;
+  color:white;
+  border:3px solid white;
+  border-radius:18px;
+  padding:8px 14px;
+  font-size:19px;
+  font-weight:900;
+}
+
+#pauseBtn{
+  position:fixed;
+  top:10px;
+  right:12px;
+  z-index:12;
+  width:52px;
+  height:52px;
+  border-radius:15px;
+  border:3px solid white;
+  background:#1769d4;
+  color:white;
+  font-size:25px;
+  font-weight:bold;
+}
+
+#controls{
+  position:fixed;
+  inset:auto 0 15px 0;
+  z-index:11;
+  display:flex;
+  justify-content:space-between;
+  padding:0 20px;
+  pointer-events:none;
+}
+
+.controlGroup{
+  display:flex;
+  gap:12px;
+}
+
+.control{
+  pointer-events:auto;
+  width:72px;
+  height:72px;
+  border-radius:50%;
+  border:4px solid #fff9;
+  background:#163c60aa;
+  color:white;
+  font-size:33px;
+  font-weight:bold;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  user-select:none;
+  touch-action:none;
+}
+
+.control:active{
+  background:#ffffff66;
+}
+
+#worldScreen{
+  position:fixed;
+  inset:0;
+  z-index:25;
+  background:linear-gradient(#149cff,#84e4ff);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding:30px 15px;
+  overflow:auto;
+}
+
+.worldTitle{
+  font-size:40px;
+  font-weight:1000;
+  color:white;
+  text-shadow:0 4px 0 #1456a0;
+  margin:15px;
+}
+
+.worlds{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(130px,220px));
+  gap:15px;
+  width:min(95%,750px);
+}
+
+.worldCard{
+  height:280px;
+  border-radius:28px;
+  border:5px solid white;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  align-items:center;
+  padding:18px;
+  color:white;
+  font-size:25px;
+  font-weight:1000;
+  text-shadow:0 3px 0 #3338;
+  box-shadow:0 10px 20px #0003;
+}
+
+.candy{
+  background:
+  radial-gradient(circle at 35% 25%,#fff 0 5%,transparent 6%),
+  linear-gradient(#ff84d1,#ffb6e8);
+}
+
+.dino{
+  background:linear-gradient(#39cb75,#0d8052);
+}
+
+.space{
+  background:linear-gradient(#392783,#09052c);
+}
+
+.locked{
+  filter:grayscale(.4);
+  opacity:.72;
+}
+
+.lockText{
+  font-size:18px;
+  margin-top:8px;
+}
+
+#finishScreen{
+  position:fixed;
+  inset:0;
+  z-index:30;
+  background:#0008;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.finishCard{
+  width:min(90%,420px);
+  padding:35px 20px;
+  border-radius:30px;
+  text-align:center;
+  background:white;
+  box-shadow:0 15px 50px #0005;
+}
+
+.finishCard h1{
+  color:#ff8b00;
+  font-size:40px;
+  margin:5px;
+}
+
+.finishCard p{
+  font-size:22px;
+  color:#155899;
+  font-weight:bold;
+}
+
+@media(max-width:650px){
+  .worlds{
+    grid-template-columns:1fr;
+  }
+
+  .worldCard{
+    width:85vw;
+    height:160px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div id="game"></div>
+
+<div id="menu" class="screen">
+
+  <div id="languageBox">
+    <select id="languageSelect">
+      <option value="en">🇬🇧 English</option>
+      <option value="ka">🇬🇪 ქართული</option>
+      <option value="ru">🇷🇺 Русский</option>
+      <option value="es">🇪🇸 Español</option>
+      <option value="fr">🇫🇷 Français</option>
+      <option value="de">🇩🇪 Deutsch</option>
+      <option value="it">🇮🇹 Italiano</option>
+      <option value="pt">🇵🇹 Português</option>
+      <option value="tr">🇹🇷 Türkçe</option>
+      <option value="pl">🇵🇱 Polski</option>
+      <option value="uk">🇺🇦 Українська</option>
+      <option value="ja">🇯🇵 日本語</option>
+      <option value="ko">🇰🇷 한국어</option>
+      <option value="zh">🇨🇳 中文</option>
+      <option value="ar">🇸🇦 العربية</option>
+      <option value="hi">🇮🇳 हिन्दी</option>
+    </select>
+  </div>
+
+  <div class="logo">BUBU</div>
+  <div class="subtitle">ADVENTURE</div>
+
+  <div class="bubuPreview">
+    <div class="body"></div>
+    <div class="head"></div>
+    <div class="hair"></div>
+    <div class="cap"></div>
+    <div class="eye1"></div>
+    <div class="eye2"></div>
+    <div class="smile"></div>
+  </div>
+
+  <button id="playBtn" class="btn">▶ Play</button>
+</div>
+
+
+<div id="worldScreen" class="hidden">
+
+  <div class="worldTitle" id="worldTitle">
+    Select World
+  </div>
+
+  <div class="worlds">
+
+    <div id="candyWorld" class="worldCard candy">
+      🍭
+      <div id="candyText">Candy World</div>
+      <div class="lockText">⭐ 0/20</div>
+    </div>
+
+    <div class="worldCard dino locked">
+      🦖
+      <div>Dino Island</div>
+      <div class="lockText">🔒</div>
+    </div>
+
+    <div class="worldCard space locked">
+      🚀
+      <div>Space World</div>
+      <div class="lockText">🔒</div>
+    </div>
+
+  </div>
+
+  <button id="backBtn" class="btn smallBtn">
+    ← Back
+  </button>
+
+</div>
+
+
+<div id="hud" class="hidden">
+  <div class="hudBox">
+    🪙 <span id="coinCount">0</span>
+  </div>
+
+  <div class="hudBox">
+    ⭐ <span id="starCount">0</span>/3
+  </div>
+</div>
+
+<button id="pauseBtn" class="hidden">Ⅱ</button>
+
+
+<div id="controls" class="hidden">
+
+  <div class="controlGroup">
+    <div id="leftBtn" class="control">←</div>
+    <div id="rightBtn" class="control">→</div>
+  </div>
+
+  <div class="controlGroup">
+    <div id="jumpBtn" class="control">↑</div>
+  </div>
+
+</div>
+
+
+<div id="finishScreen" class="hidden">
+  <div class="finishCard">
+
+    <h1>⭐ ⭐ ⭐</h1>
+
+    <p id="finishText">
+      Level Complete!
+    </p>
+
+    <p>
+      🪙 <span id="finishCoins">0</span>
+    </p>
+
+    <button id="againBtn" class="btn">
+      Play Again
+    </button>
+
+    <button id="menuBtn" class="btn smallBtn">
+      Menu
+    </button>
+
+  </div>
+</div>
+
+
+<script>
+
+const translations = {
+
+en:{
+play:"Play",
+world:"Select World",
+candy:"Candy World",
+back:"Back",
+finish:"Level Complete!",
+again:"Play Again",
+menu:"Menu"
+},
+
+ka:{
+play:"თამაში",
+world:"აირჩიე სამყარო",
+candy:"ტკბილეულის სამყარო",
+back:"უკან",
+finish:"დონე დასრულებულია!",
+again:"თავიდან თამაში",
+menu:"მენიუ"
+},
+
+ru:{
+play:"Играть",
+world:"Выберите мир",
+candy:"Мир сладостей",
+back:"Назад",
+finish:"Уровень пройден!",
+again:"Играть снова",
+menu:"Меню"
+},
+
+es:{
+play:"Jugar",
+world:"Elegir mundo",
+candy:"Mundo de Dulces",
+back:"Atrás",
+finish:"¡Nivel completado!",
+again:"Jugar de nuevo",
+menu:"Menú"
+},
+
+fr:{
+play:"Jouer",
+world:"Choisir le monde",
+candy:"Monde des Bonbons",
+back:"Retour",
+finish:"Niveau terminé !",
+again:"Rejouer",
+menu:"Menu"
+},
+
+de:{
+play:"Spielen",
+world:"Welt wählen",
+candy:"Süßigkeitenwelt",
+back:"Zurück",
+finish:"Level geschafft!",
+again:"Nochmal spielen",
+menu:"Menü"
+},
+
+it:{
+play:"Gioca",
+world:"Scegli il mondo",
+candy:"Mondo dei Dolci",
+back:"Indietro",
+finish:"Livello completato!",
+again:"Gioca ancora",
+menu:"Menu"
+},
+
+pt:{
+play:"Jogar",
+world:"Escolha o mundo",
+candy:"Mundo dos Doces",
+back:"Voltar",
+finish:"Nível concluído!",
+again:"Jogar novamente",
+menu:"Menu"
+},
+
+tr:{
+play:"Oyna",
+world:"Dünya Seç",
+candy:"Şeker Dünyası",
+back:"Geri",
+finish:"Bölüm tamamlandı!",
+again:"Tekrar Oyna",
+menu:"Menü"
+},
+
+pl:{
+play:"Graj",
+world:"Wybierz świat",
+candy:"Kraina Słodyczy",
+back:"Wróć",
+finish:"Poziom ukończony!",
+again:"Zagraj ponownie",
+menu:"Menu"
+},
+
+uk:{
+play:"Грати",
+world:"Оберіть світ",
+candy:"Світ солодощів",
+back:"Назад",
+finish:"Рівень пройдено!",
+again:"Грати знову",
+menu:"Меню"
+},
+
+ja:{
+play:"プレイ",
+world:"ワールドを選択",
+candy:"キャンディワールド",
+back:"戻る",
+finish:"レベルクリア！",
+again:"もう一度",
+menu:"メニュー"
+},
+
+ko:{
+play:"플레이",
+world:"월드 선택",
+candy:"캔디 월드",
+back:"뒤로",
+finish:"레벨 완료!",
+again:"다시 하기",
+menu:"메뉴"
+},
+
+zh:{
+play:"开始游戏",
+world:"选择世界",
+candy:"糖果世界",
+back:"返回",
+finish:"关卡完成！",
+again:"再玩一次",
+menu:"菜单"
+},
+
+ar:{
+play:"العب",
+world:"اختر العالم",
+candy:"عالم الحلوى",
+back:"رجوع",
+finish:"اكتمل المستوى!",
+again:"العب مرة أخرى",
+menu:"القائمة"
+},
+
+hi:{
+play:"खेलें",
+world:"दुनिया चुनें",
+candy:"कैंडी वर्ल्ड",
+back:"वापस",
+finish:"लेवल पूरा!",
+again:"फिर खेलें",
+menu:"मेनू"
+}
+
+};
+
+let lang = localStorage.getItem("bubuLanguage") || "en";
+
+const languageSelect =
+document.getElementById("languageSelect");
+
+languageSelect.value = lang;
+
+function applyLanguage(){
+
+  const t = translations[lang];
+
+  document.getElementById("playBtn").innerHTML =
+  "▶ " + t.play;
+
+  document.getElementById("worldTitle").innerText =
+  t.world;
+
+  document.getElementById("candyText").innerText =
+  t.candy;
+
+  document.getElementById("backBtn").innerHTML =
+  "← " + t.back;
+
+  document.getElementById("finishText").innerText =
+  t.finish;
+
+  document.getElementById("againBtn").innerText =
+  t.again;
+
+  document.getElementById("menuBtn").innerText =
+  t.menu;
+}
+
+languageSelect.addEventListener("change",()=>{
+
+  lang = languageSelect.value;
+
+  localStorage.setItem(
+    "bubuLanguage",
+    lang
+  );
+
+  applyLanguage();
+
+});
+
+applyLanguage();
+
+
+let player;
+let cursors;
+let coins;
+let hazards;
+let platforms;
+
+let gameStarted = false;
+
+let coinScore = 0;
+let starScore = 0;
+
+let moveLeft = false;
+let moveRight = false;
+
+let startX = 130;
+let startY = 480;
+
+
+const config = {
+
+type:Phaser.AUTO,
+
+parent:"game",
+
+backgroundColor:"#61d8ff",
+
+scale:{
+  mode:Phaser.Scale.RESIZE,
+  autoCenter:Phaser.Scale.CENTER_BOTH
+},
+
+physics:{
+  default:"arcade",
+  arcade:{
+    gravity:{y:900},
+    debug:false
+  }
+},
+
+scene:{
+  preload:preload,
+  create:create,
+  update:update
+}
+
+};
+
+
+const game = new Phaser.Game(config);
+
+
+function preload(){}
+
+
+function makeTextures(scene){
+
+  let g = scene.add.graphics();
+
+  /* BUBU */
+
+  g.fillStyle(0xe53935);
+  g.fillRoundedRect(11,35,36,40,10);
+
+  g.fillStyle(0x2475d0);
+  g.fillRect(12,70,14,8);
+  g.fillRect(33,70,14,8);
+
+  g.fillStyle(0xffc89a);
+  g.fillCircle(29,25,21);
+
+  g.fillStyle(0x60341f);
+  g.fillCircle(29,15,19);
+
+  g.fillStyle(0xffc89a);
+  g.fillCircle(29,28,18);
+
+  g.fillStyle(0xe53935);
+  g.fillRoundedRect(7,2,43,15,8);
+
+  g.fillStyle(0xffffff);
+  g.fillTriangle(
+    28,5,
+    32,13,
+    24,13
+  );
+
+  g.fillStyle(0x222222);
+  g.fillCircle(22,27,3);
+  g.fillCircle(36,27,3);
+
+  g.generateTexture("bubu",58,80);
+
+  g.clear();
+
+
+  /* COIN */
+
+  g.fillStyle(0xffc107);
+  g.fillCircle(18,18,17);
+
+  g.lineStyle(4,0xff8f00);
+  g.strokeCircle(18,18,15);
+
+  g.fillStyle(0xffffff);
+  g.fillCircle(18,18,5);
+
+  g.generateTexture("coin",36,36);
+
+  g.clear();
+
+
+  /* PLATFORM */
+
+  g.fillStyle(0x5cc83d);
+  g.fillRoundedRect(0,0,160,30,10);
+
+  g.fillStyle(0x87472b);
+  g.fillRect(0,22,160,35);
+
+  g.fillStyle(0x6d3722);
+
+  for(let x=10;x<150;x+=30){
+    g.fillRect(x,30,15,15);
+  }
+
+  g.generateTexture(
+    "platform",
+    160,
+    57
+  );
+
+  g.clear();
+
+
+  /* HAZARD */
+
+  g.fillStyle(0xff416c);
+
+  g.fillTriangle(
+    0,35,
+    18,0,
+    36,35
+  );
+
+  g.generateTexture(
+    "hazard",
+    36,
+    35
+  );
+
+  g.clear();
+
+
+  /* FINISH */
+
+  g.fillStyle(0xffffff);
+  g.fillRect(5,0,6,100);
+
+  g.fillStyle(0xff4f96);
+  g.fillTriangle(
+    11,5,
+    65,25,
+    11,45
+  );
+
+  g.generateTexture(
+    "finish",
+    70,
+    100
+  );
+
+  g.destroy();
+
+}
+
+
+function create(){
+
+  makeTextures(this);
+
+  this.physics.world.setBounds(
+    0,
+    0,
+    2400,
+    720
+  );
+
+
+  /* SKY */
+
+  for(let i=0;i<30;i++){
+
+    const colors=[
+      0xffa9d8,
+      0xffd774,
+      0xc4ff86,
+      0xffffff
+    ];
+
+    let c = this.add.circle(
+      Phaser.Math.Between(50,2350),
+      Phaser.Math.Between(60,420),
+      Phaser.Math.Between(20,55),
+      Phaser.Utils.Array.GetRandom(colors),
+      .35
+    );
+
+    c.setScrollFactor(.4);
+  }
+
+
+  platforms =
+  this.physics.add.staticGroup();
+
+
+  function addPlatform(x,y,scale=1){
+
+    const p =
+    platforms.create(
+      x,
+      y,
+      "platform"
+    );
+
+    p.setScale(scale);
+
+    p.refreshBody();
+
+    return p;
+  }
+
+
+  /* GROUND */
+
+  for(let x=80;x<2400;x+=150){
+    addPlatform(x,675,1.1);
+  }
+
+
+  /* FLOATING PLATFORMS */
+
+  addPlatform(420,540,.9);
+  addPlatform(680,460,.8);
+  addPlatform(920,560,.85);
+  addPlatform(1190,450,.9);
+  addPlatform(1470,530,.85);
+  addPlatform(1730,420,.8);
+  addPlatform(1990,520,.9);
+
+
+  player =
+  this.physics.add.sprite(
+    startX,
+    startY,
+    "bubu"
+  );
+
+  player.setScale(.9);
+
+  player.setCollideWorldBounds(true);
+
+  player.body.setSize(
+    38,
+    72
+  );
+
+  player.body.setOffset(
+    10,
+    7
+  );
+
+
+  this.physics.add.collider(
+    player,
+    platforms
+  );
+
+
+  /* COINS */
+
+  coins =
+  this.physics.add.staticGroup();
+
+  const coinPositions=[
+
+    [260,590],
+    [410,480],
+    [560,590],
+    [680,400],
+    [830,590],
+    [930,500],
+    [1080,590],
+    [1190,390],
+    [1330,590],
+    [1470,470],
+    [1600,590],
+    [1730,360],
+    [1870,590],
+    [1990,460],
+    [2160,590]
+
+  ];
+
+  coinPositions.forEach(pos=>{
+
+    coins
+    .create(
+      pos[0],
+      pos[1],
+      "coin"
+    )
+    .setScale(.8);
+
+  });
+
+
+  this.physics.add.overlap(
+    player,
+    coins,
+    collectCoin,
+    null,
+    this
+  );
+
+
+  /* HAZARDS */
+
+  hazards =
+  this.physics.add.staticGroup();
+
+  hazards.create(
+    780,
+    630,
+    "hazard"
+  );
+
+  hazards.create(
+    1380,
+    630,
+    "hazard"
+  );
+
+  hazards.create(
+    1850,
+    630,
+    "hazard"
+  );
+
+
+  this.physics.add.overlap(
+    player,
+    hazards,
+    hitHazard,
+    null,
+    this
+  );
+
+
+  /* STARS */
+
+  const starLocations=[
+    [680,350],
+    [1470,420],
+    [1990,410]
+  ];
+
+  const stars =
+  this.physics.add.staticGroup();
+
+  starLocations.forEach(p=>{
+
+    let s =
+    this.add.text(
+      p[0],
+      p[1],
+      "⭐",
+      {
+        fontSize:"38px"
+      }
+    );
+
+    this.physics.add.existing(
+      s,
+      true
+    );
+
+    stars.add(s);
+
+  });
+
+
+  this.physics.add.overlap(
+    player,
+    stars,
+    (p,s)=>{
+
+      s.destroy();
+
+      starScore++;
+
+      document
+      .getElementById(
+        "starCount"
+      ).innerText =
+      starScore;
+
+    },
+    null,
+    this
+  );
+
+
+  /* FINISH */
+
+  const finish =
+  this.physics.add.staticSprite(
+    2260,
+    570,
+    "finish"
+  );
+
+  this.physics.add.overlap(
+    player,
+    finish,
+    finishLevel,
+    null,
+    this
+  );
+
+
+  cursors =
+  this.input.keyboard.createCursorKeys();
+
+
+  this.cameras.main.setBounds(
+    0,
+    0,
+    2400,
+    720
+  );
+
+  this.cameras.main.startFollow(
+    player,
+    true,
+    .08,
+    .08
+  );
+
+  this.cameras.main.setDeadzone(
+    150,
+    100
+  );
+
+
+  player.setVisible(false);
+  player.body.enable=false;
+
+}
+
+
+function update(){
+
+  if(!gameStarted){
+    return;
+  }
+
+  if(
+    cursors.left.isDown ||
+    moveLeft
+  ){
+
+    player.setVelocityX(-240);
+
+    player.setFlipX(true);
+
+  }
+  else if(
+    cursors.right.isDown ||
+    moveRight
+  ){
+
+    player.setVelocityX(240);
+
+    player.setFlipX(false);
+
+  }
+  else{
+
+    player.setVelocityX(0);
+
+  }
+
+
+  if(
+    Phaser.Input.Keyboard.JustDown(
+      cursors.up
+    ) &&
+    player.body.blocked.down
+  ){
+
+    jump();
+
+  }
+
+
+  if(player.y > 710){
+
+    resetPlayer();
+
+  }
+
+}
+
+
+function jump(){
+
+  if(
+    gameStarted &&
+    player.body.blocked.down
+  ){
+
+    player.setVelocityY(-590);
+
+  }
+
+}
+
+
+function collectCoin(player,coin){
+
+  coin.disableBody(
+    true,
+    true
+  );
+
+  coinScore++;
+
+  document
+  .getElementById(
+    "coinCount"
+  ).innerText =
+  coinScore;
+
+}
+
+
+function hitHazard(){
+
+  resetPlayer();
+
+}
+
+
+function resetPlayer(){
+
+  player.setVelocity(
+    0,
+    0
+  );
+
+  player.setPosition(
+    Math.max(
+      startX,
+      player.x-180
+    ),
+    480
+  );
+
+}
+
+
+function startLevel(){
+
+  coinScore=0;
+  starScore=0;
+
+  document
+  .getElementById(
+    "coinCount"
+  ).innerText="0";
+
+  document
+  .getElementById(
+    "starCount"
+  ).innerText="0";
+
+  document
+  .getElementById(
+    "worldScreen"
+  ).classList.add(
+    "hidden"
+  );
+
+  document
+  .getElementById(
+    "hud"
+  ).classList.remove(
+    "hidden"
+  );
+
+  document
+  .getElementById(
+    "controls"
+  ).classList.remove(
+    "hidden"
+  );
+
+  document
+  .getElementById(
+    "pauseBtn"
+  ).classList.remove(
+    "hidden"
+  );
+
+  player.setPosition(
+    startX,
+    startY
+  );
+
+  player.setVisible(true);
+
+  player.body.enable=true;
+
+  gameStarted=true;
+
+}
+
+
+function finishLevel(){
+
+  if(!gameStarted){
+    return;
+  }
+
+  gameStarted=false;
+
+  player.setVelocity(
+    0,
+    0
+  );
+
+  document
+  .getElementById(
+    "finishCoins"
+  ).innerText =
+  coinScore;
+
+  document
+  .getElementById(
+    "finishScreen"
+  ).classList.remove(
+    "hidden"
+  );
+
+}
+
+
+document
+.getElementById(
+  "playBtn"
+)
+.onclick=()=>{
+
+  document
+  .getElementById(
+    "menu"
+  ).classList.add(
+    "hidden"
+  );
+
+  document
+  .getElementById(
+    "worldScreen"
+  ).classList.remove(
+    "hidden"
+  );
+
+};
+
+
+document
+.getElementById(
+  "candyWorld"
+)
+.onclick=startLevel;
+
+
+document
+.getElementById(
+  "backBtn"
+)
+.onclick=()=>{
+
+  document
+  .getElementById(
+    "worldScreen"
+  ).classList.add(
+    "hidden"
+  );
+
+  document
+  .getElementById(
+    "menu"
+  ).classList.remove(
+    "hidden"
+  );
+
+};
+
+
+document
+.getElementById(
+  "againBtn"
+)
+.onclick=()=>{
+
+  location.reload();
+
+};
+
+
+document
+.getElementById(
+  "menuBtn"
+)
+.onclick=()=>{
+
+  location.reload();
+
+};
+
+
+const leftBtn =
+document.getElementById(
+  "leftBtn"
+);
+
+const rightBtn =
+document.getElementById(
+  "rightBtn"
+);
+
+const jumpBtn =
+document.getElementById(
+  "jumpBtn"
+);
+
+
+function press(
+  element,
+  down,
+  up
+){
+
+  element.addEventListener(
+    "pointerdown",
+    e=>{
+      e.preventDefault();
+      down();
+    }
+  );
+
+  element.addEventListener(
+    "pointerup",
+    e=>{
+      e.preventDefault();
+      up();
+    }
+  );
+
+  element.addEventListener(
+    "pointercancel",
+    up
+  );
+
+  element.addEventListener(
+    "pointerleave",
+    up
+  );
+
+}
+
+
+press(
+  leftBtn,
+  ()=>moveLeft=true,
+  ()=>moveLeft=false
+);
+
+press(
+  rightBtn,
+  ()=>moveRight=true,
+  ()=>moveRight=false
+);
+
+press(
+  jumpBtn,
+  jump,
+  ()=>{}
+);
+
+
+document
+.getElementById(
+  "pauseBtn"
+)
+onclick=()=>{
+
+  gameStarted=
+  !gameStarted;
+
+};
+
+</script>
+
+</body>
+</html>
