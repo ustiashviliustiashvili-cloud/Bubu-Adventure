@@ -842,6 +842,136 @@ body.game-running .attackCtrl{
   box-shadow:0 8px 0 #075097,0 14px 20px #00427533!important;
 }
 
+
+
+/* ===== V25 responsive polish ===== */
+.menu-panels-open .v7SideRail{display:none!important}
+.menu-panels-open .v7Hub{padding-left:8px!important}
+.menuOverlayPanel .panelHeader{
+  width:min(96vw,850px)!important;
+  margin:0 auto!important;
+}
+.menuOverlayPanel .panelHeader h2{
+  font-size:clamp(18px,4.8vw,30px)!important;
+  line-height:1.05!important;
+}
+.menuOverlayPanel .panelWallet{
+  font-size:12px!important;
+  padding:4px 7px!important;
+  white-space:nowrap;
+}
+.menuOverlayPanel .panelBack{flex:0 0 auto}
+
+@media (max-width: 900px){
+  .menuOverlayPanel .customBody{
+    grid-template-columns:98px 86px minmax(0,1fr)!important;
+    gap:6px!important;
+    width:min(96vw,850px)!important;
+  }
+  .menuOverlayPanel .customGrid{
+    grid-template-columns:repeat(2,minmax(72px,1fr))!important;
+  }
+}
+
+@media (max-width: 700px){
+  .menuOverlayPanel{
+    padding:8px 6px 16px!important;
+  }
+  .menuOverlayPanel .panelHeader{
+    grid-template-columns:42px minmax(0,1fr) auto!important;
+    gap:4px!important;
+    padding:0 6px!important;
+    min-height:54px!important;
+  }
+  .menuOverlayPanel .panelBack{
+    width:36px!important;
+    height:36px!important;
+    font-size:22px!important;
+  }
+  .menuOverlayPanel .customBody{
+    grid-template-columns:1fr!important;
+    gap:10px!important;
+    width:min(96vw,560px)!important;
+  }
+  .menuOverlayPanel .customPreview{
+    min-height:155px!important;
+    padding-top:4px!important;
+  }
+  .menuOverlayPanel .customPreview .exactBubuImg{
+    width:108px!important;
+    max-width:42vw!important;
+  }
+  .menuOverlayPanel .categoryList{
+    display:grid!important;
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:6px!important;
+  }
+  .menuOverlayPanel .catBtn{
+    height:42px!important;
+    justify-content:center!important;
+  }
+  .menuOverlayPanel .customGrid{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:8px!important;
+  }
+  .charactersPanel.menuOverlayPanel .characterRow{
+    width:min(96vw,560px)!important;
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:10px!important;
+    padding:12px 10px 14px!important;
+  }
+  .charactersPanel .charPortrait{height:88px!important}
+
+  .worldWrap{
+    justify-content:flex-start!important;
+    padding:12px 8px 16px!important;
+  }
+  .title{
+    margin:8px 0 14px!important;
+    text-align:center!important;
+    font-size:clamp(34px,9vw,58px)!important;
+    line-height:.9!important;
+  }
+  .cards{
+    width:100%!important;
+    gap:10px!important;
+  }
+  .card{
+    height:270px!important;
+    min-width:0!important;
+    border-width:5px!important;
+    border-radius:24px!important;
+  }
+  .worldName{
+    font-size:clamp(16px,4.6vw,28px)!important;
+    line-height:1.02!important;
+  }
+  .worldStars{
+    font-size:18px!important;
+  }
+  .enterBadge{
+    width:82px!important;
+    height:82px!important;
+    left:50%!important;
+    top:50%!important;
+    transform:translate(-50%,-50%)!important;
+  }
+  .backBtn{
+    width:min(100%,560px)!important;
+    max-width:none!important;
+    margin-top:14px!important;
+  }
+
+  #settingsScreen .panel{
+    width:min(94vw,620px)!important;
+    padding:18px 14px 20px!important;
+  }
+  #settingsScreen .panel h2{
+    font-size:30px!important;
+    margin-bottom:14px!important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -875,7 +1005,7 @@ body.game-running .attackCtrl{
         </div>
 
         <div class="v7HeroArt" aria-label="Bubu">
-          <img class="exactBubuImg" src="bubu_v24.png?v=24" alt="Bubu">
+          <img class="exactBubuImg" src="bubu_v24.png?v=25" alt="Bubu">
         </div>
 
         <button id="playBtn" class="v7PlayBtn"><span class="playTriangle">▶</span><span id="playLabel">PLAY</span></button>
@@ -905,7 +1035,7 @@ body.game-running .attackCtrl{
       </header>
       <div class="customBody">
         <div class="customPreview">
-          <img class="exactBubuImg" src="bubu_v24.png?v=24" alt="Bubu">
+          <img class="exactBubuImg" src="bubu_v24.png?v=25" alt="Bubu">
           <div id="customPreviewLabel" class="previewLabel">Bubu</div>
         </div>
         <nav id="categoryList" class="categoryList">
@@ -926,7 +1056,7 @@ body.game-running .attackCtrl{
         <div></div>
       </header>
       <div class="characterRow">
-        <button class="charCard active"><div class="charPortrait bubuPortrait"><img class="exactBubuImg" src="bubu_v24.png?v=24" alt="Bubu"></div><b>Bubu</b><em>✓</em></button>
+        <button class="charCard active"><div class="charPortrait bubuPortrait"><img class="exactBubuImg" src="bubu_v24.png?v=25" alt="Bubu"></div><b>Bubu</b><em>✓</em></button>
         <button class="charCard lockedChar" data-name="Kiki"><div class="charPortrait kikiPortrait">🎀</div><b>Kiki</b><em>🔒</em></button>
         <button class="charCard lockedChar" data-name="Momo"><div class="charPortrait momoPortrait">🐼</div><b>Momo</b><em>🔒</em></button>
         <button class="charCard lockedChar" data-name="Toto"><div class="charPortrait totoPortrait">🦖</div><b>Toto</b><em>🔒</em></button>
@@ -1051,7 +1181,7 @@ body.game-running .attackCtrl{
 </div>
 
 <script>
-/* BUBU ADVENTURE V24 — single file build */
+/* BUBU ADVENTURE V25 — single file build */
 
 const translations={
 en:{play:"PLAY",worlds:"WORLDS",settings:"SETTINGS",selectWorld:"SELECT WORLD",candy:"Candy World",dino:"Dino Island",space:"Space World",back:"BACK",language:"LANGUAGE",complete:"LEVEL COMPLETE!",again:"PLAY AGAIN",menu:"MENU",paused:"PAUSED",resume:"RESUME",rotate:"Turn your phone sideways"},
@@ -1238,19 +1368,27 @@ function selectCustomItem(cat,item){
   applyBubuStyle();
   renderCustomizer(cat);
 }
+function syncMenuOverlayState(){
+  const open = (window.customizePanel && !customizePanel.classList.contains('hidden')) ||
+               (window.charactersPanel && !charactersPanel.classList.contains('hidden'));
+  menu.classList.toggle('menu-panels-open', !!open);
+}
 function hideMenuPanels(){
   if(window.customizePanel) customizePanel.classList.add('hidden');
   if(window.charactersPanel) charactersPanel.classList.add('hidden');
+  syncMenuOverlayState();
 }
 function openCustomizer(){
   hideMenuPanels();
   customizePanel.classList.remove('hidden');
   customizePanel.scrollTop=0;
+  syncMenuOverlayState();
 }
 function openCharactersPanel(){
   hideMenuPanels();
   charactersPanel.classList.remove('hidden');
   charactersPanel.scrollTop=0;
+  syncMenuOverlayState();
 }
 
 applyBubuStyle();
@@ -1293,7 +1431,7 @@ const config={
 new Phaser.Game(config);
 
 function preload(){
-  this.load.image('bubuExact','bubu_v24.png?v=24');
+  this.load.image('bubuExact','bubu_v24.png?v=25');
 }
 
 function createTextures(scene){
@@ -2137,12 +2275,14 @@ async function goMenu(){
 }
 function openWorlds(){
   hideMenuPanels();
+  menu.classList.remove("menu-panels-open");
   menu.classList.add("hidden");
   settingsScreen.classList.add("hidden");
   worldScreen.classList.remove("hidden");
 }
 function openSettings(){
   hideMenuPanels();
+  menu.classList.remove("menu-panels-open");
   menu.classList.add("hidden");
   worldScreen.classList.add("hidden");
   settingsScreen.classList.remove("hidden");
