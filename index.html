@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="theme-color" content="#2aaeff">
-<title>BUBU Adventure — V4</title>
+<title>BUBU Adventure — V5</title>
 
 <script src="https://cdn.jsdelivr.net/npm/phaser@3.80.1/dist/phaser.min.js"></script>
 
@@ -283,6 +283,67 @@ button{font-family:inherit}
   .title{margin-bottom:14px}
   .backBtn{margin-top:16px}
 }
+
+
+/* ===== V5 polish ===== */
+#menu:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:linear-gradient(to bottom,transparent 0 68%,rgba(34,116,43,.08) 100%);
+  box-shadow:inset 0 0 90px #0b5a9a22;
+}
+.logo{animation:logoFloat 3.4s ease-in-out infinite}
+@keyframes logoFloat{
+  0%,100%{transform:translateY(0) rotate(-1deg)}
+  50%{transform:translateY(-6px) rotate(1deg)}
+}
+.bigBtn{backdrop-filter:blur(2px)}
+.bigBtn::first-letter{filter:drop-shadow(0 2px 1px #0003)}
+.menuButtons{position:relative}
+.menuButtons:before{
+  content:"";
+  position:absolute;
+  width:112%;height:115%;
+  left:-6%;top:-7%;
+  border-radius:42px;
+  background:rgba(255,255,255,.10);
+  border:2px solid rgba(255,255,255,.20);
+  box-shadow:inset 0 0 30px rgba(255,255,255,.12);
+  z-index:-1;
+}
+#levelIntro{
+  position:fixed;
+  z-index:35;
+  left:50%;top:16%;
+  transform:translate(-50%,-20px) scale(.95);
+  padding:13px 28px;
+  border-radius:28px;
+  border:4px solid #fff;
+  background:linear-gradient(#ff74bd,#e52f8e);
+  color:white;
+  font-weight:1000;
+  font-size:clamp(20px,4vw,32px);
+  text-shadow:0 3px 0 #9d185c;
+  box-shadow:0 8px 0 #a92367,0 14px 28px #0004;
+  opacity:0;
+  pointer-events:none;
+  transition:.35s ease;
+}
+#levelIntro.show{
+  opacity:1;
+  transform:translate(-50%,0) scale(1);
+}
+#game:after{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:3;
+  box-shadow:inset 0 0 70px rgba(0,66,126,.12);
+}
+
 </style>
 </head>
 <body>
@@ -366,6 +427,8 @@ button{font-family:inherit}
   </div>
 </div>
 
+<div id="levelIntro" class="hidden">🍭 Candy World • Level 1</div>
+
 <!-- HUD -->
 <div id="hud" class="hidden">
   <div class="hudBox">🪙 <span id="coinCount">0</span></div>
@@ -410,7 +473,7 @@ button{font-family:inherit}
 </div>
 
 <script>
-/* BUBU ADVENTURE V4 — single file build */
+/* BUBU ADVENTURE V5 — single file build */
 
 const translations={
 en:{play:"PLAY",worlds:"WORLDS",settings:"SETTINGS",selectWorld:"SELECT WORLD",candy:"Candy World",dino:"Dino Island",space:"Space World",back:"BACK",language:"LANGUAGE",complete:"LEVEL COMPLETE!",again:"PLAY AGAIN",menu:"MENU",paused:"PAUSED",resume:"RESUME"},
@@ -480,11 +543,12 @@ function buildLanguages(){
 applyLanguage();
 
 /* Phaser */
-let player,platforms,coins,stars,enemies,finishFlag,cursors;
+let player,playerShadow,platforms,coins,stars,enemies,finishFlag,cursors;
 let moveLeft=false,moveRight=false;
 let gameActive=false,coinScore=0,starScore=0;
 let sceneRef=null;
 let starting=false;
+let lastDust=0;
 let bubuAnimTime=0;
 let bubuRunFrame=0;
 
@@ -681,6 +745,28 @@ function createTextures(scene){
   g.fillStyle(0xffffff,0.3); g.fillCircle(47,32,5);
   g.generateTexture('flag',104,138);
 
+  /* soft shadow */
+  g.clear();
+  g.fillStyle(0x0c4c52,0.25);
+  g.fillEllipse(46,12,88,18);
+  g.generateTexture('shadow',92,24);
+
+  /* small flower */
+  g.clear();
+  g.fillStyle(0xfff4f7,1);
+  for(let a=0;a<Math.PI*2;a+=Math.PI/3){
+    g.fillCircle(16+Math.cos(a)*7,16+Math.sin(a)*7,5);
+  }
+  g.fillStyle(0xffd43b,1); g.fillCircle(16,16,5);
+  g.fillStyle(0x4dbd47,1); g.fillRoundedRect(14,22,4,14,2);
+  g.generateTexture('flower',32,38);
+
+  /* sparkle */
+  g.clear();
+  g.fillStyle(0xffffff,0.95);
+  g.fillPoints(starPoints(8,8,8,2.5),true);
+  g.generateTexture('sparkle',16,16);
+
   /* lollipop decoration */
   g.clear();
   g.fillStyle(0xffffff,1); g.fillRoundedRect(24,58,10,66,5);
@@ -759,6 +845,23 @@ function create(){
     deco.add(gum2);
   }
 
+  // waterfall and river ribbons
+  const water=this.add.graphics();
+  water.fillStyle(0x49cfff,0.82);
+  water.fillRoundedRect(1210,330,92,270,28);
+  water.fillStyle(0xb9f4ff,0.65);
+  water.fillRoundedRect(1230,340,18,245,9);
+  water.fillRoundedRect(1260,350,10,220,5);
+  water.setScrollFactor(.48);
+
+  // tiny flowers in the middle distance
+  for(let i=0;i<38;i++){
+    const fx=Phaser.Math.Between(40,3550);
+    const fy=Phaser.Math.Between(555,630);
+    const f=this.add.image(fx,fy,'flower').setScale(Phaser.Math.FloatBetween(.45,.8));
+    f.setScrollFactor(.72);
+  }
+
   // draw a simple candy castle
   const castle=this.add.graphics();
   castle.fillStyle(0xff94cf,1);
@@ -805,7 +908,11 @@ function create(){
     p.refreshBody();
   });
 
+  playerShadow=this.add.image(145,634,'shadow').setScale(.82);
+  playerShadow.setDepth(4);
+
   player=this.physics.add.sprite(145,510,'bubuIdle').setScale(.80);
+  player.setDepth(6);
   player.setCollideWorldBounds(true);
   player.body.setSize(66,126).setOffset(31,30);
   this.physics.add.collider(player,platforms);
@@ -848,12 +955,22 @@ function create(){
   this.cameras.main.setBounds(0,0,3600,720);
   this.cameras.main.startFollow(player,true,.08,.08);
   this.cameras.main.setDeadzone(170,100);
+  this.cameras.main.setZoom(1.02);
 
   player.setVisible(false);
+  if(playerShadow)playerShadow.setVisible(false);
   player.body.enable=false;
 }
 function update(time){
   if(!gameActive||!player||!player.body)return;
+
+  if(playerShadow){
+    playerShadow.x=player.x;
+    playerShadow.y=Math.min(641,player.y+93);
+    const air=Math.max(0,Math.min(1,(641-playerShadow.y)/110));
+    playerShadow.setScale(.82-air*.22,.82-air*.30);
+    playerShadow.setAlpha(.28-air*.12);
+  }
 
   enemies?.children?.iterate(e=>{
     if(!e)return;
@@ -877,17 +994,25 @@ function update(time){
 
   if(!player.body.blocked.down){
     if(player.texture.key!=="bubuJump")player.setTexture("bubuJump");
-    player.setAngle(0);
+    player.setAngle(player.body.velocity.x*0.012);
   }else if(moving){
-    if(time-bubuAnimTime>115){
+    if(time-bubuAnimTime>105){
       bubuAnimTime=time;
       bubuRunFrame=1-bubuRunFrame;
       player.setTexture(bubuRunFrame?"bubuRun1":"bubuRun2");
     }
-    player.setAngle(0);
+    player.setAngle((right?1:-1)*2.2);
+
+    if(time-lastDust>190){
+      lastDust=time;
+      const d=sceneRef.add.circle(player.x-(right?35:-35),player.y+72,5,0xffffff,.55);
+      d.setDepth(5);
+      sceneRef.tweens.add({targets:d,x:d.x-(right?18:-18),y:d.y-8,alpha:0,scale:1.8,duration:420,onComplete:()=>d.destroy()});
+    }
   }else{
     if(player.texture.key!=="bubuIdle")player.setTexture("bubuIdle");
-    player.setAngle(Math.sin(time/220)*1.2);
+    player.setAngle(Math.sin(time/300)*.7);
+    player.setScale(.80, .80 + Math.sin(time/300)*.006);
   }
 
   if(Phaser.Input.Keyboard.JustDown(cursors.up)&&player.body.blocked.down)jump();
@@ -899,9 +1024,26 @@ function jump(){
   if(gameActive&&player?.body?.blocked.down)player.setVelocityY(-650);
 }
 function collectCoin(p,c){
+  if(!c.active)return;
+  const cx=c.x, cy=c.y;
   c.disableBody(true,true);
   coinScore++;
   coinCount.textContent=coinScore;
+
+  for(let i=0;i<5;i++){
+    const sp=sceneRef.add.image(cx,cy,'sparkle').setDepth(15).setScale(.6);
+    const a=(Math.PI*2/5)*i;
+    sceneRef.tweens.add({
+      targets:sp,
+      x:cx+Math.cos(a)*34,
+      y:cy+Math.sin(a)*34-10,
+      alpha:0,
+      scale:1.1,
+      duration:360,
+      ease:'Quad.easeOut',
+      onComplete:()=>sp.destroy()
+    });
+  }
 }
 function hitEnemy(){
   if(!gameActive)return;
@@ -924,15 +1066,24 @@ function startLevel(){
   settingsScreen.classList.add("hidden");
   finishScreen.classList.add("hidden");
   pauseScreen.classList.add("hidden");
+  levelIntro.classList.add('hidden');
   hud.classList.remove("hidden");
   controls.classList.remove("hidden");
   pauseBtn.classList.remove("hidden");
+
+  levelIntro.classList.remove('hidden');
+  requestAnimationFrame(()=>levelIntro.classList.add('show'));
+  setTimeout(()=>{
+    levelIntro.classList.remove('show');
+    setTimeout(()=>levelIntro.classList.add('hidden'),350);
+  },1700);
 
   player.setPosition(145,510);
   player.setVelocity(0,0);
   player.setTexture("bubuIdle");
   player.setAngle(0);
   player.setVisible(true);
+  if(playerShadow)playerShadow.setVisible(true);
   player.body.enable=true;
   gameActive=true;
   sceneRef.physics.resume();
@@ -960,6 +1111,7 @@ function goMenu(){
   pauseBtn.classList.add("hidden");
   finishScreen.classList.add("hidden");
   pauseScreen.classList.add("hidden");
+  levelIntro.classList.add('hidden');
   worldScreen.classList.add("hidden");
   settingsScreen.classList.add("hidden");
   menu.classList.remove("hidden");
