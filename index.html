@@ -7,7 +7,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>BUBU Adventure — V28</title>
+<title>BUBU Adventure — V29</title>
 
 <script src="https://cdn.jsdelivr.net/npm/phaser@3.80.1/dist/phaser.min.js"></script>
 
@@ -999,6 +999,49 @@ body.game-running .attackCtrl{
 }
 .settingsBackTop:active{transform:translateY(3px);box-shadow:0 2px 0 #08478e}
 
+
+/* ===== V29 CLEAN GAME HUD ===== */
+#levelIntro{display:none!important}
+#hud{
+  left:14px!important;
+  top:12px!important;
+  gap:7px!important;
+  align-items:center!important;
+}
+.hudBox{
+  min-width:0!important;
+  height:44px!important;
+  padding:0 12px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:5px!important;
+  border:2px solid rgba(255,255,255,.82)!important;
+  border-radius:15px!important;
+  background:rgba(8,65,112,.72)!important;
+  backdrop-filter:blur(7px)!important;
+  -webkit-backdrop-filter:blur(7px)!important;
+  color:#fff!important;
+  font-size:19px!important;
+  font-weight:1000!important;
+  line-height:1!important;
+  box-shadow:0 3px 8px rgba(0,45,85,.25)!important;
+  text-shadow:0 1px 2px rgba(0,0,0,.25)!important;
+}
+#pauseBtn{
+  right:14px!important;
+  top:12px!important;
+  width:46px!important;
+  height:46px!important;
+  border:2px solid rgba(255,255,255,.85)!important;
+  border-radius:15px!important;
+  background:rgba(8,65,112,.72)!important;
+  backdrop-filter:blur(7px)!important;
+  -webkit-backdrop-filter:blur(7px)!important;
+  font-size:23px!important;
+  box-shadow:0 3px 8px rgba(0,45,85,.25)!important;
+}
+
 </style>
 </head>
 <body>
@@ -1211,7 +1254,7 @@ body.game-running .attackCtrl{
 </div>
 
 <script>
-/* BUBU ADVENTURE V28 — NEW Bubu animated run / jump */
+/* BUBU ADVENTURE V29 — smoother Bubu movement + clean HUD */
 
 const translations={
 en:{play:"PLAY",worlds:"WORLDS",settings:"SETTINGS",selectWorld:"SELECT WORLD",candy:"Candy World",dino:"Dino Island",space:"Space World",back:"BACK",language:"LANGUAGE",complete:"LEVEL COMPLETE!",again:"PLAY AGAIN",menu:"MENU",paused:"PAUSED",resume:"RESUME",rotate:"Turn your phone sideways"},
@@ -1951,46 +1994,55 @@ function update(time){
   const right=cursors.right.isDown||moveRight;
   const moving=left||right;
 
-  if(left){
-    player.setVelocityX(-270);
-    player.setFlipX(true);
-  }else if(right){
-    player.setVelocityX(270);
-    player.setFlipX(false);
-  }else{
-    player.setVelocityX(0);
-  }
+  const targetVX = left ? -270 : right ? 270 : 0;
+  const smoothVX = Phaser.Math.Linear(player.body.velocity.x,targetVX,moving ? .20 : .24);
+  player.setVelocityX(Math.abs(smoothVX)<2 ? 0 : smoothVX);
+  if(left) player.setFlipX(true);
+  else if(right) player.setFlipX(false);
 
-  // V28: the SAME new polished Bubu, animated with separate walking poses.
+  // V29: smoother 4-step walk cycle using the same polished Bubu.
   if(!player.body.blocked.down){
     player.setTexture("bubuNewJump");
     player.setScale(.29);
     player.setAngle(0);
   }else if(moving){
-    if(time-bubuAnimTime>125){
+    if(time-bubuAnimTime>92){
       bubuAnimTime=time;
-      bubuRunFrame=1-bubuRunFrame;
+      bubuRunFrame=(bubuRunFrame+1)%4;
     }
-    player.setTexture(bubuRunFrame ? "bubuNewRun1" : "bubuNewRun2");
-    player.setScale(.29);
-    player.setAngle(0);
 
-    if(time-lastDust>190){
+    if(bubuRunFrame===0){
+      player.setTexture("bubuNewRun1");
+      player.setAngle(-1.2);
+    }else if(bubuRunFrame===1){
+      player.setTexture("bubuNewIdle");
+      player.setAngle(0);
+    }else if(bubuRunFrame===2){
+      player.setTexture("bubuNewRun2");
+      player.setAngle(1.2);
+    }else{
+      player.setTexture("bubuNewIdle");
+      player.setAngle(0);
+    }
+    player.setScale(.29);
+
+    if(time-lastDust>210){
       lastDust=time;
       const dir=left?-1:1;
-      const d=sceneRef.add.circle(player.x-dir*22,player.y+70,5,0xffffff,.5);
+      const d=sceneRef.add.circle(player.x-dir*22,player.y+70,4,0xffffff,.42);
       d.setDepth(5);
       sceneRef.tweens.add({
         targets:d,
-        x:d.x-dir*16,
-        y:d.y-7,
+        x:d.x-dir*13,
+        y:d.y-5,
         alpha:0,
-        scale:1.6,
-        duration:360,
+        scale:1.45,
+        duration:320,
         onComplete:()=>d.destroy()
       });
     }
   }else{
+    bubuRunFrame=0;
     player.setTexture("bubuNewIdle");
     player.setScale(.29);
     player.setAngle(0);
@@ -2253,13 +2305,6 @@ async function startLevel(){
   hud.classList.remove("hidden");
   controls.classList.remove("hidden");
   pauseBtn.classList.remove("hidden");
-
-  levelIntro.classList.remove('hidden');
-  requestAnimationFrame(()=>levelIntro.classList.add('show'));
-  setTimeout(()=>{
-    levelIntro.classList.remove('show');
-    setTimeout(()=>levelIntro.classList.add('hidden'),350);
-  },1700);
 
   player.setPosition(220,500);
   player.setVelocity(0,0);
